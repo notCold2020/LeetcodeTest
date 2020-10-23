@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/crm?useUnicode=true&characterEncoding-utr-8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: myq888.ten
+mybatis:
+#  将该路径下的xml文件加载到mybatis中，把接口对应到xml文件上
+  mapper-locations: classpath:mapper/*.xml
+#  扫描包 有了这个在xml里面 返回值或者入参就不用写全限定类名了 直接写类名小写就可以
+#  没有也行 返回值就得是全限定类名了
+  type-aliases-package: com.lrw.ohter.demo.entriy
+#  驼峰命名 将数据库字段和实体类的属性对应
+  configuration:
+    map-underscore-to-camel-case: true
+#    控制台打印日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+logging:
+  level:
+    root: info
