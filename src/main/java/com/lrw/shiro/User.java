@@ -11,6 +11,14 @@ public class User {
     public String userName;
     public String password;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
     public boolean getAvailable() {
         return false;
     }
