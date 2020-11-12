@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.lrw.ohter.demo.dao.userDao">
+<mapper namespace="com.cxr.other.demo.dao.userDao">
 
-    <resultMap id="User" type="com.lrw.ohter.demo.entriy.User">
+    <resultMap id="User" type="com.cxr.other.demo.entriy.User">
         <id property="id" column="id"/>
         <!-- property是实体对应的属性       -->
         <!-- column是数据库对应的列       -->
@@ -11,7 +11,7 @@
         <result property="password" column="password"/>
     </resultMap>
 
-    <select id="getUser" resultType="com.lrw.ohter.demo.entriy.User">
+    <select id="getUser" resultType="com.cxr.other.demo.entriy.User">
         select * from user where user_name = #{name,jdbcType=VARCHAR} and pwd = #{pwd,jdbcType=VARCHAR}
     </select>
 
@@ -23,7 +23,7 @@
         select user_name from user where id = #{id}
     </select>
 
-    <insert id="insertUser" parameterType="com.lrw.ohter.demo.entriy.User" >
+    <insert id="insertUser" parameterType="com.cxr.other.demo.entriy.User" >
         insert into user (id,user_name,pwd) values
         (#{id,jdbcType=INTEGER},#{userName,jdbcType=VARCHAR},#{pwd,jdbcType=VARCHAR})
     </insert>
@@ -41,7 +41,7 @@
         (#{id},#{userName},#{password});
     </insert>
     <select id="selectUser"
-            resultType="com.lrw.ohter.demo.entriy.User">
+            resultType="com.cxr.other.demo.entriy.User">
         select id,user_name from user
          where user_name = #{name,jdbcType=VARCHAR }
     </select>
@@ -70,10 +70,10 @@
         select * from user where user_name like  #{mohu,jdbcType=VARCHAR}"%"
     </select>
 
-    <resultMap id="StudentTeacher" type="com.lrw.ohter.demo.entriy.Student">
+    <resultMap id="StudentTeacher" type="com.cxr.other.demo.entriy.Student">
         <result property="id" column="sid"/>
         <result property="name" column="sname"/>
-        <association property="teacher" javaType="com.lrw.ohter.demo.entriy.Teacher">
+        <association property="teacher" javaType="com.cxr.other.demo.entriy.Teacher">
             <result property="name" column="tName"/>
         </association>
     </resultMap>
@@ -83,10 +83,10 @@
     </select>
 
 
-    <resultMap id="TeacherStudent" type="com.lrw.ohter.demo.entriy.Teacher">
+    <resultMap id="TeacherStudent" type="com.cxr.other.demo.entriy.Teacher">
         <result property="id" column="tid"/>
         <result property="name" column="tname"/>
-        <collection property="students" ofType="com.lrw.ohter.demo.entriy.Student">
+        <collection property="students" ofType="com.cxr.other.demo.entriy.Student">
             <result property="id" column="sid"/>
             <result property="name" column="sname"/>
             <result property="tid" column="tid"/>
@@ -105,7 +105,7 @@
         select t.id tid,t.name tname,s.id ,s.name sname from teacher t,student s where t.id = s.tid and t.id = 1
     </select>
 
-    <select id="getUserList" resultType="com.lrw.ohter.demo.entriy.User" parameterType="list">
+    <select id="getUserList" resultType="com.cxr.other.demo.entriy.User" parameterType="list">
         select * from user    where id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
             #{item}
