@@ -1,34 +1,21 @@
 package com.cxr.other;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.cxr.shiro.User;
+import com.fasterxml.jackson.databind.JsonNode;
 
-import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
+/**
+ nums1 = [1,2,3,0,0,0], m = 3
+ nums2 = [2,5,6],       n = 3
 
+ 输出：[1,2,2,3,5,6]
+ */
 class Solution {
-    public String longestCommonPrefix(String[] strs) {
-        if (strs == null || strs.length == 0) {
-            return "";
-        }
-        int length = strs[0].length();
-        int count = strs.length;
-        for (int i = 0; i < length; i++) {
-            //得到数组第一个元素的每一个 字母
-            char c = strs[0].charAt(i);
-            for (int j = 1; j < count; j++) {
-                if (i == strs[j].length() || strs[j].charAt(i) != c) {
-                    //公共前缀【0】里面肯定有
-                    return strs[0].substring(0, i);
-                }
-            }
-        }
-        return strs[0];
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        System.arraycopy(nums2,0,nums1,m,n);
+        Arrays.sort(nums1);
     }
 }
-
-
-
-

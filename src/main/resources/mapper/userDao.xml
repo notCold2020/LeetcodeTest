@@ -7,8 +7,8 @@
         <!-- property是实体对应的属性       -->
         <!-- column是数据库对应的列       -->
         <!-- 只是用作结果集       -->
-        <result property="name" column="username"/>
-        <result property="password" column="password"/>
+        <result property="userName" column="username"/>
+        <result property="pwdddd" column="password"/>
     </resultMap>
 
     <select id="getUser" resultType="com.cxr.other.demo.entriy.User">
@@ -58,13 +58,13 @@
     </insert>
 
 
-    <resultMap id="userr" type="user">
-        <result column="id" property="id"/>
-        <result column="user_name" property="userName"/>
-        <result column="pwd" property="pwd"/>
-    </resultMap>
+<!--    <resultMap id="userr" type="user">-->
+<!--        <result column="id" property="id"/>-->
+<!--        <result column="user_name" property="userName"/>-->
+<!--        <result column="pwd" property="pwd"/>-->
+<!--    </resultMap>-->
 
-    <select id="selectByLike" resultMap="userr">
+    <select id="selectByLike" >
 <!--        这就是sql字符串拼接函数↓ -->
 <!--        select * from user where user_name like  concat(concat(#{mohu,jdbcType=VARCHAR},'%'))-->
         select * from user where user_name like  #{mohu,jdbcType=VARCHAR}"%"
@@ -73,9 +73,9 @@
     <resultMap id="StudentTeacher" type="com.cxr.other.demo.entriy.Student">
         <result property="id" column="sid"/>
         <result property="name" column="sname"/>
-        <association property="teacher" javaType="com.cxr.other.demo.entriy.Teacher">
-            <result property="name" column="tName"/>
-        </association>
+<!--        <association property="teacher" javaType="com.cxr.other.demo.entriy.Teacher">-->
+<!--            <result property="name" column="tName"/>-->
+<!--        </association>-->
     </resultMap>
 
     <select id="selectTeacher" resultMap="StudentTeacher">

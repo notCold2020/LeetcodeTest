@@ -1,30 +1,13 @@
 package com.cxr.other.timeTo;
 
-/**
- * 创建时间： 2018年9月5日 晚上11:41:52
- * 创建者：Administrator
- * 创建地点：
- */
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * 描述：
- * @author 边坤鹏
- * 2018年9月5日 晚上11:41:52
- */
 public class java获取当前年份月份当月第一天和最后一天 {
 
-	/**
-	 * 描述：
-	 * @param args
-	 * @author 边坤鹏
-	 * 2018年9月5日 晚上11:41:52
-	 */
-	public static void main(String[] args) {
-		// 获取当前年份、月份、日期
+    public static void main(String[] args) {
+        // 获取当前年份、月份、日期
         Calendar cale = Calendar.getInstance();
         int year = cale.get(Calendar.YEAR);
         int month = cale.get(Calendar.MONTH) + 1;
@@ -67,6 +50,13 @@ public class java获取当前年份月份当月第一天和最后一天 {
         System.out.println("当前日期字符串1：" + format.format(d));
         System.out.println("当前日期字符串2：" + year + "/" + month + "/" + day + " "
                 + hour + ":" + minute + ":" + second);
-	}
+
+        SimpleDateFormat myFmt=new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
+        SimpleDateFormat myFmt2=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//等价于now.toLocaleString()
+        SimpleDateFormat myFmt4=new SimpleDateFormat(
+                "一年中的第 D 天 一年中第w个星期 一月中第W个星期 在一天中k时 z时区");
+        Date now=new Date();
+        System.out.println(myFmt2.format(now));
+    }
 
 }
