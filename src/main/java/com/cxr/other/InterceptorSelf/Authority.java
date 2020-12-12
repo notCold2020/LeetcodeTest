@@ -1,4 +1,4 @@
-package com.cxr.other.InterceotorSelf;
+package com.cxr.other.InterceptorSelf;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

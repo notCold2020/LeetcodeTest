@@ -42,5 +42,5 @@ public interface userDao {
 
     void insertList(List<User> users);
 
-    Map<String, Object> getListMap();
+    List<Map<String, Object>> getListMap();
 }

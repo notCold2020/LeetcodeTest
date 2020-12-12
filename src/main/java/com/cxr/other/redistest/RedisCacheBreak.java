@@ -30,7 +30,6 @@ public class RedisCacheBreak {
                 }
                 //释放锁
                 reentrantLock.unlock();
-
             } else {
                 //没获取到锁 睡一会再尝试获取
                 Thread.sleep(3000);

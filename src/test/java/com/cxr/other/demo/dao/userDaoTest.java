@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.*;
 
 @SpringBootTest
-class userDaoTest {
+public class userDaoTest {
 
     @Autowired
     private userDao userDao;
@@ -62,7 +62,7 @@ class userDaoTest {
 
     @Test
     void selectUser(){
-        List<User> users = userDao.selectUser("张三");
+        List<User> users = userDao.selectUser("李四");
         for(User u1:users){
             System.out.println(u1);
         }
@@ -111,7 +111,16 @@ class userDaoTest {
 
     @Test
     void getListMapTest(){
-        Map<String, Object> listMap = userDao.getListMap();
+        List<Map<String, Object>> listMap = userDao.getListMap();
         System.out.println(listMap);
+    }
+    @Test
+    void t1(){
+        LinkedList<Integer> list = new LinkedList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(1,80);
+        System.out.println(list);
     }
 }

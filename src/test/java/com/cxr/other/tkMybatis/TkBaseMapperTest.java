@@ -161,6 +161,11 @@ class TkBaseMapperTest {
         // id 和name 是我们要查询的列名，指定条件列为age
 //        example.selectProperties("id", "name").createCriteria().andEqualTo("age", 19);
         userMapper.selectByExample(condition);
+
+
+        Condition condition2 = new Condition(TkUserPojo.class);
+        Condition.Criteria criteria = condition.createCriteria();
+        criteria.andEqualTo("age", 19);
     }
 
     /**

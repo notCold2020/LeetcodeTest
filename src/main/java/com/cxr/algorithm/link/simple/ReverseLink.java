@@ -1,6 +1,6 @@
 package com.cxr.algorithm.link.simple;
 
-import com.cxr.algorithm.link.ListNode;
+import com.cxr.other.ListNode;
 
 import java.util.Stack;
 
@@ -12,9 +12,9 @@ import java.util.Stack;
 public class ReverseLink {
     //2种方法，一种是借助栈，先进后出，不过空间复杂度会高
     //第二种是直接调换指针的方向
-    public static ListNode reverseLink(ListNode root){
+    public static ListNode reverseLink(ListNode root) {
         //最基础的情况
-        if (root==null||root.next==null){
+        if (root == null || root.next == null) {
             return root;
         }
         ListNode newHead = reverseLink(root.next);
@@ -22,20 +22,21 @@ public class ReverseLink {
         root.next = null;
         return newHead;
     }
+
     //借助栈
-    public static ListNode reverseLinkWithStack(ListNode root){
+    public static ListNode reverseLinkWithStack(ListNode root) {
         //最基础的情况
-        if (root==null||root.next==null){
+        if (root == null || root.next == null) {
             return root;
         }
         Stack<Integer> stack = new Stack<>();
-        while (root!=null){
+        while (root != null) {
             stack.push(root.val);
             root = root.next;
         }
         ListNode head = new ListNode(0);
         ListNode resultHead = head;
-        while (!stack.isEmpty()){
+        while (!stack.isEmpty()) {
             //peek 不会使元素出栈
             ListNode vo = new ListNode(stack.pop());
             head.next = vo;
@@ -44,23 +45,19 @@ public class ReverseLink {
         return resultHead.next;
     }
 
-
-
-
-
     public static void main(String[] args) {
         ListNode root = new ListNode(1);
         ListNode v1 = new ListNode(2);
         ListNode v2 = new ListNode(3);
         ListNode v3 = new ListNode(4);
         ListNode v4 = new ListNode(5);
-        root.next  =v1;
+        root.next = v1;
         v1.next = v2;
         v2.next = v3;
-        v3.next =v4;
+        v3.next = v4;
 
         ListNode newRoot = reverseLinkWithStack(root);
-        while (newRoot!=null){
+        while (newRoot != null) {
             System.out.println(newRoot.val);
             newRoot = newRoot.next;
         }

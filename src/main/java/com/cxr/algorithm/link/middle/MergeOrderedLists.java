@@ -1,7 +1,7 @@
 package com.cxr.algorithm.link.middle;
 
 
-import com.cxr.algorithm.link.ListNode;
+import com.cxr.other.ListNode;
 
 import java.util.LinkedList;
 import java.util.List;

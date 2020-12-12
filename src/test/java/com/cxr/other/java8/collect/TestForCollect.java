@@ -238,6 +238,7 @@ class TestForCollect {
         personList.add(new Person("Sherry", 8800, 26, "male", "New York"));
         personList.add(new Person("Sherry", 9000, 26, "female", "New York"));
 
+        Stream<Integer> integerStream = personList.stream().map(x -> Integer.valueOf(x.getSalary()));
         /**
          * Collectors.toCollection:用自定义的数据结构来收集
          * Set 只要存的是对象 必须指定比较器不然不知道用哪个去重

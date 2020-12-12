@@ -79,13 +79,15 @@ public class RedisDelayQueue<T> {
         try {
             /**
              * 1.消费者消费为什么不按照顺序
-             * 2.为什么interrupt join 之后islive就死了？ 没有抛出异常
+             * 2.为什么consumer.interrupt();
+             *        consumer.join();       之后islive就死了？ 没有抛出异常
+             * 3.为啥会有个类型转换的错误 有时候有 有时候没有
              */
             producer.join();
             Thread.sleep(6000);
             consumer.interrupt();
             System.out.println(consumer.isAlive());
-            consumer.join();//再调用这个方法的时候抛出了异常 所以方法终止了
+            consumer.join();
             System.out.println(consumer.isAlive());
             System.out.println("结束");
         } catch (Exception e) {

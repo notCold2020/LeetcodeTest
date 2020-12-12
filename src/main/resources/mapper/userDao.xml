@@ -43,7 +43,7 @@
     <select id="selectUser"
             resultType="com.cxr.other.demo.entriy.User">
         select id,user_name from user
-         where user_name = #{name,jdbcType=VARCHAR }
+         where name = #{name,jdbcType=VARCHAR }
     </select>
 
     <insert id="insertList" parameterType="list">
@@ -64,7 +64,7 @@
 <!--        <result column="pwd" property="pwd"/>-->
 <!--    </resultMap>-->
 
-    <select id="selectByLike" >
+    <select id="selectByLike" resultType="com.cxr.other.demo.entriy.User">
 <!--        这就是sql字符串拼接函数↓ -->
 <!--        select * from user where user_name like  concat(concat(#{mohu,jdbcType=VARCHAR},'%'))-->
         select * from user where user_name like  #{mohu,jdbcType=VARCHAR}"%"

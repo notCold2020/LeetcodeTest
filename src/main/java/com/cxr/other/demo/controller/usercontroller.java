@@ -22,8 +22,8 @@ public class usercontroller {
     // 如果用对象来接收并且和对象中的变量对应上 那就能拿到这个对象
     //如果用String 来接收那就能拿到个json的String
     @ResponseBody
-    private String getUser(  String user) {
+    private String getUser(String user,String t1) {
 //        User user1 = new User(user.getId(),user.getPwdddd(),user.getUserName());
-        return user;
+        return user + t1;
     }
 }

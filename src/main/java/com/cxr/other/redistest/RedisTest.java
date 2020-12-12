@@ -31,7 +31,7 @@ public class RedisTest {
     public User test(@RequestBody User user) {
         long currentTime = System.currentTimeMillis();
         if (redisTemplate.hasKey("limit")) {
-            //专业这个set会越来越大 我们把它排序只取前5个
+            //主要这个set会越来越大 我们把它排序只取前5个
             //也就是在下面这个时间段里面
             int count = redisTemplate.opsForZSet().rangeByScore("limit", currentTime - 10 * 1000, currentTime).size();
             if (count != 0 && count > 5) {
@@ -39,10 +39,10 @@ public class RedisTest {
                 return null;
             }
         }
+        //这里我们只需要分数即可 value是什么我们不在乎 给个uuid即可 别因为重复给覆盖掉了就行
         redisTemplate.opsForZSet().add("limit", UUID.randomUUID().toString(), currentTime);
 //        return userService.getUser(user.getName(), user.getPassword());
         return new User();
     }
-
 
 }

@@ -1,4 +1,4 @@
-package com.cxr.other.ThreadLocal;
+package com.cxr.other.threadTest;
 
 import java.util.ArrayList;
 import java.util.List;
