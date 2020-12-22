@@ -19,6 +19,7 @@ class Buffer {
             try {
                 wait();
             } catch (InterruptedException e) {
+                System.out.println("异常捕获");
             }
         }
         Integer i = bufferList.remove(0);
@@ -32,6 +33,7 @@ class Buffer {
             try {
                 wait();
             } catch (InterruptedException e) {
+                System.out.println("异常捕获");
             }
         }
         bufferList.add(value);
@@ -52,10 +54,7 @@ class Consumer extends Thread {
         //一直在这等待查看缓冲区是否有工作
         while (true) {
             try {
-                synchronized ("B"){
-                    int value = buffer.getWork();
-                    System.out.println("消费第" + count + "次，获得的值为" + value);
-                }
+                System.out.println("消费第" + count + "次，获得的值为" + buffer.getWork());
                 ++count;
                 //争抢时间片的过程 本质上就是线程频繁切换 实际上还是单线程
                 //所以才会打印到控制台的时候 生产者消费者一起打印 然后间隔1s 再打印
@@ -78,11 +77,8 @@ class Producer extends Thread {
     public void run() {
         int a = 0;
         for (int i = 0; i < 100; i++) {
-            synchronized ("A"){
-                //让下面这俩操作变成原子性操作
-                this.buffer.addWorker(a);
-                System.out.println("生产者生产了" + i + ",第" + (a + 1) + "次生产");
-            }
+            this.buffer.addWorker(a);
+            System.out.println("生产者生产了" + i + ",第" + (a + 1) + "次生产");
             ++a;
         }
     }

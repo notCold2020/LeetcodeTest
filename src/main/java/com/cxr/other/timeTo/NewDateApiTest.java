@@ -242,8 +242,8 @@ class NewDateApiTest10 {
         System.out.println("格式化前:" + now2);
         String format2 = now2.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
         System.out.println("格式化后:" + format2);
-        String util = util(5);
-        System.out.println(util);
+//        String util = util(5);
+//        System.out.println(util);
     }
 
     /**
@@ -255,7 +255,7 @@ class NewDateApiTest10 {
      * @param days  需小于60  返回距今days天前的每个月的起止日期
      * @return  JSON格式字符串
      */
-    public static String util(Integer days) {
+    public static String getJsonAfterDays(Integer days) {
         LocalDate endDate = LocalDate.now();
         LocalDate startDate = endDate.minus(days, ChronoUnit.DAYS);//初始时间
 

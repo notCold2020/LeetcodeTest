@@ -66,6 +66,7 @@ class ThreadPoolMethod2 {
         ExecutorService executorService1 = Executors.newSingleThreadExecutor();
         ExecutorService executorService2 = Executors.newFixedThreadPool(10);//10个可复用的线程
         ExecutorService executorService3 = Executors.newCachedThreadPool();
+        ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(2);
 
         for (int i = 0; i < 100; i++) {
             int finalI = i;
