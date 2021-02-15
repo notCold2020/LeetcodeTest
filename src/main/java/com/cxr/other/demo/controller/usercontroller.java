@@ -1,15 +1,24 @@
 package com.cxr.other.demo.controller;
 
+import com.cxr.other.demo.dao.testInter;
 import com.cxr.other.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class usercontroller {
     @Autowired
-
     private UserService userService;
+
+    private testInter testInter;
+
+    @Autowired
+    public void setTestInter(@Qualifier("testInterImpl1") com.cxr.other.demo.dao.testInter testInter) {
+        testInter.testInter();
+        this.testInter = testInter;
+    }
 
     @RequestMapping(value = {
             "",

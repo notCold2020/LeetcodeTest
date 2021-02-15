@@ -9,9 +9,13 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User implements Serializable {
+public class User implements Serializable,Cloneable {
     private Integer id;
     private String userName;
     private String pwdddd;
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

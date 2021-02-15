@@ -29,11 +29,11 @@ public class userDaoTest {
     @Test
     void getUserByName() {
         String userByName = userDao.getStringUsername(1);
-        logger.info(userByName+"---");
+        logger.info(userByName + "---");
     }
 
     @Test
-    void insertUser(){
+    void insertUser() {
 //        User user = new User();
 //        user.setUserName("插入测试");
 //        user.setPwd("测试密码");
@@ -41,86 +41,111 @@ public class userDaoTest {
     }
 
     @Test
-    void updateuser(){
-        userDao.updateUserByid("1","大狗子");
+    void updateuser() {
+        userDao.updateUserByid("1", "大狗子");
     }
 
     @Test
-    void deleteByid(){
+    void deleteByid() {
         userDao.deleteUserById(5);
     }
 
     @Test
-    void insertByMap(){
+    void insertByMap() {
         Map<String, Object> map = new HashMap<>();
-        map.put("id",11);
-        map.put("userName",1);
-        map.put("password",1);
+        map.put("id", 11);
+        map.put("userName", 1);
+        map.put("password", 1);
 
         userDao.insert(map);
     }
 
     @Test
-    void selectUser(){
+    void selectUser() {
         List<User> users = userDao.selectUser("李四");
-        for(User u1:users){
+        for (User u1 : users) {
             System.out.println(u1);
         }
     }
 
     @Test
-    void selectByLikeTest(){
+    void selectByLikeTest() {
         List<User> users = userDao.selectByLike("张");
-        for(User u1:users){
+        for (User u1 : users) {
             System.out.println(u1);
         }
     }
 
     @Test
-    void selectStudent(){
+    void selectStudent() {
         List<Teacher> students = userDao.selectTeacher2();
-        for(Teacher student:students){
+        for (Teacher student : students) {
             System.out.println(student);
         }
     }
 
     @Test
-    void getUserListTest(){
+    void getUserListTest() {
         List<User> userList = userDao.getUserList(Arrays.asList(1, 2, 3, 4));
-        for(User user:userList){
+        for (User user : userList) {
             System.out.println(user);
         }
     }
 
     @Test
-    void getUserMapTest(){
+    void getUserMapTest() {
         List<Map<String, Object>> userMap = userDao.getUserMap();
-        for(Map<String, Object> user:userMap){
+        for (Map<String, Object> user : userMap) {
             System.out.println(user);
         }
     }
 
     @Test
-    void insertListTest(){
+    void insertListTest() {
         List<User> list = new ArrayList<>();
-        list.add(new User(222,"222","222"));
-        list.add(new User(2272,"222","222"));
-        list.add(new User(22772,"222","222"));
+        list.add(new User(222, "222", "222"));
+        list.add(new User(2272, "222", "222"));
+        list.add(new User(22772, "222", "222"));
         userDao.insertList(list);
     }
 
     @Test
-    void getListMapTest(){
+    void getListMapTest() {
         List<Map<String, Object>> listMap = userDao.getListMap();
         System.out.println(listMap);
     }
+
     @Test
-    void t1(){
+    void t1() {
         LinkedList<Integer> list = new LinkedList<>();
         list.add(1);
         list.add(2);
         list.add(3);
-        list.add(1,80);
+        list.add(1, 80);
         System.out.println(list);
     }
+
+    public static int calc(int n) {
+        try {
+            n += 1;
+            if (n / 0 > 0) {
+                n += 1;
+            } else {
+                n -= 10;
+            }
+            return n;
+        } catch (Exception e) {
+            n++;
+        }
+        n++;
+        return n++;
+    }
+
+    @Test
+    void tt() {
+        for (char c : "没人比我更懂java".toCharArray()) {
+            System.out.println(c);
+        }
+    }
+
 }

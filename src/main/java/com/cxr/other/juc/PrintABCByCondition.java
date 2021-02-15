@@ -38,6 +38,7 @@ class Data3 {
     int number = 1;
 
     public void printA() {
+        //就像thread.wait()必须再synchronized里面一样，不然就IllegalMonitorStateException
         lock.lock();
         try {
             while (number != 1) {

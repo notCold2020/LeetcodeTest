@@ -234,7 +234,8 @@ class RedisTemplateDemoTest {
         Set<ZSetOperations.TypedTuple<Object>> tuples = new HashSet<ZSetOperations.TypedTuple<Object>>();
         tuples.add(objectTypedTuple1);
         tuples.add(objectTypedTuple2);
-        System.out.println(redisTemplate.opsForZSet().add("zset1", tuples));
+        Long zset11 = redisTemplate.opsForZSet().add("zset1", tuples);
+        System.out.println(zset11);
         System.out.println(redisTemplate.opsForZSet().range("zset1", 0, -1));
 
 //        结果：2.2  原为1.1  增加元素的score值，并返回增加后的值

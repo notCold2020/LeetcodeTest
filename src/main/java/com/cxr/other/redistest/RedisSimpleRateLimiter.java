@@ -33,7 +33,7 @@ public class RedisSimpleRateLimiter {
         pipeline.zremrangeByScore(key, 0, now - period * 1000);
         //查看在period秒内用户点击了多少次（无效点击+有效点击都算在period秒之内，所以如果用户一直连续不断点击，会一直提示无效点击）
         //用户必须停下来等待几秒才可以，不能一直连续点击，前端可以做个计数器，一直点，后面的就不发请求了，过几秒再发
-        Response<Long> count = pipeline.zcard(key);
+        Response<Long> count = pipeline.zcard(key);//返回count
         //这里给key设置过期时间，是防止冷用户占用内存
         pipeline.expire(key, period + 1);
         pipeline.exec();

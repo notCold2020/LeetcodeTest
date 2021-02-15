@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
     public void before(JoinPoint joinpoint){
         System.out.println("-----");
         logger.info("我是前置通知");
-        logger.info(joinpoint.toString());
+        logger.info(joinpoint.getSignature().toString());
     }
 
 }
