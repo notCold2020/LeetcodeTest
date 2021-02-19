@@ -1,3 +1,5 @@
+package com.cxr.other;
+
 import com.cxr.algorithm.tree.TreeNode;
 import com.cxr.other.ListNode;
 import com.cxr.other.demo.entriy.User;
@@ -26,7 +28,7 @@ class Solution {
     }
 
     public static void main(String[] args) {
-        System.out.println("我我我我");
+        System.out.println("分支合并");
     }
 
 }
