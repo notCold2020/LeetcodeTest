@@ -28,7 +28,7 @@ class Solution {
     }
 
     public static void main(String[] args) {
-        System.out.println("分支合并123");
+        System.out.println("分支合并12356564");
     }
 
 }
