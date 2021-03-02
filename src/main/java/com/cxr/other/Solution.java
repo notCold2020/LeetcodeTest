@@ -1,32 +1,36 @@
-import com.cxr.algorithm.tree.TreeNode;
-import com.cxr.other.ListNode;
-import com.cxr.other.demo.entriy.User;
+package com.cxr.other;
 
-import java.io.Serializable;
+import com.cxr.LeecodetestApplication;
+
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * 输入: s = "pwwkew"
+ * 输出: 3
+ * 解释: 因为无重复字符的最长子串是 "wke"，所以其长度为 3。
+ *      请注意，你的答案必须是 子串 的长度，"pwke" 是一个子序列，不是子串。
+ */
 class Solution {
-    public int findLengthOfLCIS(int[] nums) {
-        if (nums.length == 0) {
-            return 0;
-        }
-        int len = 1;
-        int max = 1;
-        int lmax = nums.length - 1;
-        for (int i = 0; i < nums.length; i++) {
-            if (i != lmax && nums[i] < nums[i + 1]) {
-                len++;
-                max = Math.max(max, len);
-            } else {
-                len = 1;
+    /**
+     * map (k, v)，其中 key 值为字符，value 值为字符位置;
+     */
+    public static int lengthOfLongestSubstring(String s) {
+        int length = s.length();
+        int max = 0;
+
+        Map<Character, Integer> map = new HashMap<>();
+        for (int start = 0, end = 0; end < length; end++) {
+            char element = s.charAt(end);
+            if (map.containsKey(element)) {
+                start = Math.max(map.get(element) + 1, start); //map.get()的地方进行+1操作
             }
+            max = Math.max(max, end - start + 1);
+            map.put(element, end);
         }
         return max;
     }
 
     public static void main(String[] args) {
-        System.out.println("我我我我");
+        lengthOfLongestSubstring("pwwkew");
     }
-
 }
