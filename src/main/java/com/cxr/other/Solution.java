@@ -1,36 +1,59 @@
 package com.cxr.other;
 
-import com.cxr.LeecodetestApplication;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 /**
- * 输入: s = "pwwkew"
- * 输出: 3
- * 解释: 因为无重复字符的最长子串是 "wke"，所以其长度为 3。
- *      请注意，你的答案必须是 子串 的长度，"pwke" 是一个子序列，不是子串。
+ * 示例：
+ * 二叉树：[3,9,20,null,null,15,7],
+ * <p>
+ * 3
+ * / \
+ * 9  20
+ * /  \
+ * 15   7
+ * <p>
+ * 返回：
+ * [
+ * [3],
+ * [20,9],
+ * [15,7]
+ * ]
  */
+
 class Solution {
-    /**
-     * map (k, v)，其中 key 值为字符，value 值为字符位置;
-     */
-    public static int lengthOfLongestSubstring(String s) {
-        int length = s.length();
-        int max = 0;
-
-        Map<Character, Integer> map = new HashMap<>();
-        for (int start = 0, end = 0; end < length; end++) {
-            char element = s.charAt(end);
-            if (map.containsKey(element)) {
-                start = Math.max(map.get(element) + 1, start); //map.get()的地方进行+1操作
-            }
-            max = Math.max(max, end - start + 1);
-            map.put(element, end);
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> lists = new ArrayList<>();
+        if (root == null) {
+            return lists;
         }
-        return max;
-    }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            LinkedList<Integer> list = new LinkedList<>();
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode poll = queue.poll();
+                //用结果集的size 0不就是第0层 正序 ，1倒叙
+                if (lists.size() % 2 == 0) {
+                    list.add(poll.val);
+                } else {
+                    list.addFirst(poll.val);
+                }
 
-    public static void main(String[] args) {
-        lengthOfLongestSubstring("pwwkew");
+                if (poll.left != null) {
+                    queue.add(poll.left);
+                }
+                if (poll.right != null) {
+                    queue.add(poll.right);
+                }
+            }
+            lists.add(0, list);
+        }
+        return lists;
     }
 }
+

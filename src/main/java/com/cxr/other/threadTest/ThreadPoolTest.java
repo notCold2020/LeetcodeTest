@@ -40,6 +40,7 @@ class ThreadPoolMethod {
         for (int i = 0; i < 10000; i++) {
             Future<String> submit = executorService.submit(() -> {
                 list.add(random.nextInt());
+                Thread.sleep(2000);
                 return "我是submit的返回值";
             });
             System.out.println("submit:" + submit.get());
@@ -81,4 +82,18 @@ class ThreadPoolMethod2 {
         }
     }
 
+}
+
+class ThreadPoolMethod3 {
+    static ExecutorService executorService = Executors.newFixedThreadPool(3);
+
+    public static void main(String[] args) {
+        executorService.execute(() -> {
+            for (int i = 0; i < 10000; i++) {
+                System.out.println("我是：" + i);
+            }
+        });
+
+        System.out.println("=============");
+    }
 }

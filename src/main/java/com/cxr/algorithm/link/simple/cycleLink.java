@@ -28,6 +28,26 @@ public class cycleLink {
     }
 
     /**
+     * 就是公式 快慢指针第一次相遇后吧快指针放到head 再次相遇的时候 就是成环节点
+     */
+    public ListNode detectCycle(ListNode head) {
+        ListNode fast = head, slow = head;
+        while (true) {
+            if (fast == null || fast.next == null) return null;
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) break;
+        }
+        fast = head;
+        while (slow != fast) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return fast;
+    }
+
+
+    /**
      * 最容易想到的方法是遍历所有节点，每次遍历到一个节点时，判断该节点此前是否被访问过。
      * <p>
      * 具体地，我们可以使用哈希表来存储所有已经访问过的节点。每次我们到达一个节点，

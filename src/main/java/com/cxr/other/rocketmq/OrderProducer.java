@@ -1,11 +1,15 @@
 package com.cxr.other.rocketmq;
 
+import com.alibaba.fastjson.JSON;
+import org.apache.rocketmq.client.exception.MQBrokerException;
+import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.client.producer.MessageQueueSelector;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.client.producer.selector.SelectMessageQueueByHash;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.common.message.MessageQueue;
+import org.apache.rocketmq.remoting.exception.RemotingException;
 
 import java.util.List;
 
@@ -13,29 +17,28 @@ public class OrderProducer {
 
     public static void main(String[] args) throws Exception {
         //extends mqConfig
-        DefaultMQProducer producer = new DefaultMQProducer("syncProducer");
-        producer.setNamesrvAddr("127.0.0.1:9876");
-        producer.setRetryTimesWhenSendFailed(2);
-        producer.start();
+        DefaultMQProducer producer = MqConfig.getProduct();
 
-        for (int x = 0; x < 300; x++) {
-            String orderId = x + "订单编号xxxxxx";
-            Message message = new Message("sync_topic", "sync_tags", ("this is a order_sync--" + orderId).getBytes());
+        for (int x = 0; x < 30; x++) {
+            Integer orderId = x;
+            Message message = new Message("topicname", "sync_tags", ("消息--" + orderId).getBytes());
 
             SendResult sendResult = producer.send(message, (mqs, msg, arg) -> {
-                System.out.println("queue selector mq nums:" + mqs.size());
-                System.out.println("msg info： " + msg.toString());
-                for (MessageQueue mq : mqs) {
-                    System.out.println(mq.toString());
-                }
                 Integer id = (Integer) arg;//这一堆就是在配置messageQueue选择的规则
                 int index = id % mqs.size();
                 return mqs.get(index);
             }, orderId);
 
-            System.out.println("###############################################");
-            System.out.println("sendResult: " + sendResult);
+            System.out.println("发送成功：sendResult: " + JSON.toJSONString(sendResult));
+            System.out.println("=================================");
         }
+
+
+    }
+
+    public void pushAsync() throws MQClientException, RemotingException, InterruptedException, MQBrokerException {
+
+        DefaultMQProducer producer = MqConfig.getProduct();
 
         //select是队列选择器
         String orderNum = "buySomething";
@@ -57,7 +60,5 @@ public class OrderProducer {
         //人家写好的hash
         SendResult send1 = producer.send(new Message(), new SelectMessageQueueByHash(), 1000L);
         producer.shutdown();
-
-
     }
 }

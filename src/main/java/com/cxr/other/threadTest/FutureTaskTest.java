@@ -60,6 +60,7 @@ public class FutureTaskTest {
          *
          * 但是咱们也不知道啥时候执行完 所以有了isdone()方法
          */
+        System.out.println("继续往下执行");
         if (futureTask.isDone()) {
             String result = futureTask.get();
             System.out.println("任务执行结束，result====>" + result);

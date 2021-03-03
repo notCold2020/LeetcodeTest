@@ -36,6 +36,10 @@ class Buffer {
     }
 
     public void get(int key) {
+        /**
+         * 有读锁 不能再加写锁 可以再加读锁
+         * 有写锁 任何锁都不能再加 写锁是个排他锁
+         */
         reentrantReadWriteLock.readLock().lock();
         Object o = hashMap.get(key);
         System.out.println(Thread.currentThread().getName() + "拿到了" + o.toString());

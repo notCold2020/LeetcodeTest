@@ -228,7 +228,7 @@ class RedisTemplateDemoTest {
         System.out.println("double:" + score);
         Set<Object> zset1 = redisTemplate.opsForZSet().range("zset1", 0, -1);
         zset1.forEach(System.out::println);
-        //批量
+        //批量 这就是个value - score的结构 有getValue getScore方法
         ZSetOperations.TypedTuple<Object> objectTypedTuple1 = new DefaultTypedTuple<Object>("zset-5", 9.6);
         ZSetOperations.TypedTuple<Object> objectTypedTuple2 = new DefaultTypedTuple<Object>("zset-6", 9.9);
         Set<ZSetOperations.TypedTuple<Object>> tuples = new HashSet<ZSetOperations.TypedTuple<Object>>();

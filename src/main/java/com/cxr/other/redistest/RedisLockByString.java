@@ -25,7 +25,9 @@ public class RedisLockByString {
     public String test() {
         //uuid是为了区分不同的客户端
         String uuid = UUID.randomUUID().toString();
-        //false说明 已经被锁了
+        /*false说明 已经被锁了
+            这个apple才是真正的锁 下面的stock是商品的库存
+         */
         Boolean apple = redisTemplate.opsForValue().setIfAbsent("apple", uuid, 30, TimeUnit.SECONDS);
         /**
          * 过期时间是为了防止锁超时 比如A挂了,
@@ -39,7 +41,7 @@ public class RedisLockByString {
                 return null;
             }
             //获取商品库存
-            int stock = Integer.parseInt(String.valueOf(redisTemplate.opsForValue().get("stock")));
+            int stock = Integer.parseInt(String.valueOf(redisTemplate.opsForValue().get("stock")));//注意这里的key和上面的不一样
             if (stock > 0) {
                 stock -= 1;
                 redisTemplate.opsForValue().set("stock", String.valueOf(stock));//更新缓存
