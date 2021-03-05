@@ -1,59 +1,62 @@
 package com.cxr.other;
 
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.io.file.FileReader;
+import cn.hutool.http.HttpRequest;
+import cn.hutool.json.JSON;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONString;
+import cn.hutool.json.JSONUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-/**
- * 示例：
- * 二叉树：[3,9,20,null,null,15,7],
- * <p>
- * 3
- * / \
- * 9  20
- * /  \
- * 15   7
- * <p>
- * 返回：
- * [
- * [3],
- * [20,9],
- * [15,7]
- * ]
- */
+import java.io.*;
+import java.util.*;
 
-class Solution {
-    public List<List<Integer>> levelOrder(TreeNode root) {
-        List<List<Integer>> lists = new ArrayList<>();
-        if (root == null) {
-            return lists;
+
+public class Solution {
+    public ArrayList<String> permutation(String str) {
+        ArrayList<String> list = new ArrayList<>();
+        if (str == null || str.length() == 0) {
+            return list;
         }
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
-        while (!queue.isEmpty()) {
-            LinkedList<Integer> list = new LinkedList<>();
-            int size = queue.size();
-            for (int i = 0; i < size; i++) {
-                TreeNode poll = queue.poll();
-                //用结果集的size 0不就是第0层 正序 ，1倒叙
-                if (lists.size() % 2 == 0) {
-                    list.add(poll.val);
-                } else {
-                    list.addFirst(poll.val);
-                }
 
-                if (poll.left != null) {
-                    queue.add(poll.left);
-                }
-                if (poll.right != null) {
-                    queue.add(poll.right);
-                }
-            }
-            lists.add(0, list);
-        }
-        return lists;
+        collect(str.toCharArray(), 0, list);
+        // 保证字典序
+        Collections.sort(list);
+        return list;
     }
-}
 
+    //获得chars数组从begin开始(固定begin)的全排列都放到list中
+    private void collect(char[] chars, int begin, ArrayList<String> list) {
+        if (begin == chars.length - 1) {
+            // 想一想树 只有走到树的末尾 也就是begin走到length-1了
+            String s = String.valueOf(chars);
+            if (!list.contains(s)) {
+                list.add(s);
+                return;
+            }
+        }
+        /**
+         * 比如abcd 交换之后 aa交换 ab ac ad
+         *          begin+1 bb bc bd
+         */
+        for (int i = begin; i < chars.length; i++) {
+            swap(chars, i, begin);
+            //对除第一个字符外的字符序列进行递归
+            collect(chars, begin + 1, list);
+            swap(chars, i, begin);
+        }
+
+    }
+
+    private void swap(char[] chars, int i, int j) {
+        char temp = chars[j];
+        chars[j] = chars[i];
+        chars[i] = temp;
+    }
+
+}

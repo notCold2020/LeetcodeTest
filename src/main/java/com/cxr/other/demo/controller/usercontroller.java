@@ -2,6 +2,8 @@ package com.cxr.other.demo.controller;
 
 import com.cxr.other.demo.dao.testInter;
 import com.cxr.other.demo.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,8 @@ public class usercontroller {
     @Autowired
     private UserService userService;
 
+    Logger logger = LoggerFactory.getLogger(usercontroller.class);
+
     private testInter testInter;
 
     @Autowired
@@ -21,7 +25,6 @@ public class usercontroller {
     }
 
     @RequestMapping(value = {
-            "",
             "/page",
             "page*",
             "view/*,**/msg"
@@ -33,6 +36,7 @@ public class usercontroller {
     private Integer getUser(@RequestParam(defaultValue = "15",required = false,value = "one") Integer one) {
 //        User user1 = new User(user.getId(),user.getPwdddd(),user.getUserName());
         System.out.println(one.getClass().toString());
+        logger.info("dddddd");
         return one;
     }
 }
