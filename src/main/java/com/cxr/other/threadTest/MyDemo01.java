@@ -70,6 +70,7 @@ class MyDemo02 {
     public static void main(String[] args) throws InterruptedException {
         try {
             MyDemo02 demo02 = new MyDemo02();
+//            demo02.getContent();
             for (int i = 0; i < 5; i++) {
                 Thread thread = new Thread(() -> {
 //                    try {

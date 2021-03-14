@@ -40,9 +40,9 @@ class RedisTemplateDemoTest {
         stringRedisTemplate.opsForValue().set("张三2", "张三1233");
         String zs2 = stringRedisTemplate.opsForValue().get("张三2");
         System.out.println(zs2);
-        User user = new User(1, "1", "张三");
+//        User user = new User(1, "1", "张三");
         //存储对象也可以 Object强转
-        redisTemplate.opsForValue().set("66", user);
+//        redisTemplate.opsForValue().set("66", user);
         User user1 = (User) redisTemplate.opsForValue().get("66");
         System.out.println(user1);
 

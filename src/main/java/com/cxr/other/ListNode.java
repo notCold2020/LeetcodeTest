@@ -14,4 +14,9 @@ public class ListNode {
         this.val = val;
         this.next = next;
     }
+
+    public static void main(String[] args) {
+        String replace = "ss".replace('s', 'o');
+        System.out.println(replace);
+    }
 }

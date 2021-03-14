@@ -71,12 +71,13 @@ class ThreadPoolMethod2 {
 
         for (int i = 0; i < 100; i++) {
             int finalI = i;
-            executorService2.execute(() -> {
+            executorService3.execute(() -> {
                 try {
                     Thread.sleep(1000);
-                    System.out.println(Thread.currentThread().getName() + ":" + finalI);
                 } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
+                System.out.println(Thread.currentThread().getName() + ":" + finalI);
             });
             System.out.println("-----");
         }
@@ -88,12 +89,14 @@ class ThreadPoolMethod3 {
     static ExecutorService executorService = Executors.newFixedThreadPool(3);
 
     public static void main(String[] args) {
-        executorService.execute(() -> {
-            for (int i = 0; i < 10000; i++) {
-                System.out.println("我是：" + i);
-            }
-        });
+        for (int i = 0; i < 10000; i++) {
+            int finalI = i;
+            executorService.execute(() -> {
+                System.out.println("我是：" + finalI + "---" + Thread.currentThread().getName());
+            });
+        }
 
         System.out.println("=============");
+        executorService.shutdown();
     }
 }

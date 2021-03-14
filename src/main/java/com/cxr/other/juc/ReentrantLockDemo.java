@@ -5,6 +5,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class ReentrantLockDemo {
     private Integer count = 40;
+
     public static void main(String[] args) {
         ReentrantLockDemo reentrantLockDemo = new ReentrantLockDemo();
         new Thread(() -> {
@@ -17,7 +18,9 @@ public class ReentrantLockDemo {
             for (int i = 0; i < 40; i++) reentrantLockDemo.save();
         }, "C").start();
     }
+
     Lock lock = new ReentrantLock();
+
     public void save() {
         try {
             /**

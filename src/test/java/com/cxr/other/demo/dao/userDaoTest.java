@@ -103,9 +103,9 @@ public class userDaoTest {
     @Test
     void insertListTest() {
         List<User> list = new ArrayList<>();
-        list.add(new User(222, "222", "222"));
-        list.add(new User(2272, "222", "222"));
-        list.add(new User(22772, "222", "222"));
+//        list.add(new User(222, "222", "222"));
+//        list.add(new User(2272, "222", "222"));
+//        list.add(new User(22772, "222", "222"));
         userDao.insertList(list);
     }
 

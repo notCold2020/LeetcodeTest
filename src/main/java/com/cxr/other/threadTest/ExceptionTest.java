@@ -64,21 +64,6 @@ public class ExceptionTest implements ThreadFactory {
         });
     }
 
-    public static void test05() throws ExecutionException, InterruptedException {
-        ExecutorService executorService = Executors.newSingleThreadExecutor(new ExceptionTest());
-
-        Future<Integer> submit = executorService.submit(() -> {
-            int i = 1 / 0;
-            return i;
-        });
-        //异常被吞了 不调用get方法不报异常
-        try {
-            System.out.println(submit.get()+"---test05");
-        }catch (Exception e){
-            System.out.println("d");
-        }
-    }
-
     @Override
     public Thread newThread(Runnable r) {
         Thread t = new Thread(r);
@@ -91,6 +76,23 @@ public class ExceptionTest implements ThreadFactory {
         });
         return t;
     }
+
+    public static void test05() throws ExecutionException, InterruptedException {
+        ExecutorService executorService = Executors.newSingleThreadExecutor(new ExceptionTest());
+
+        Future<Integer> submit = executorService.submit(() -> {
+            int i = 1 / 0;
+            return i;
+        });
+        //异常被吞了 不调用get方法不报异常
+        try {
+            System.out.println(submit.get()+"---test05");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("d");
+        }
+    }
+
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         test05();

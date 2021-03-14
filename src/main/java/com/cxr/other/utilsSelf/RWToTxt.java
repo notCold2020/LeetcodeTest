@@ -18,22 +18,29 @@ class RWToTxt {
     static Logger logger = LoggerFactory.getLogger(RWToTxt.class);
 
     public static void main(String[] args) throws IOException {
-        BufferedReader reader = IoUtil.getReader(new BufferedReader(new InputStreamReader(new FileInputStream("C:\\Users\\cixingrui\\Desktop\\视频跟贴马甲号\\视频跟贴马甲号\\综艺.txt"), "GBK")));
-        while (reader.readLine() != null) {
-            StringBuilder stringBuilder = new StringBuilder("http://user.m.163.com/api/dsf/user/createUser?productId=1&ibc=newsapp&token=123&passport=");
-            String majia = reader.readLine().split(",")[0];
-            stringBuilder.append(majia);
-            String body = HttpRequest.post(stringBuilder.toString()).body(new JSONObject()).execute().body();
-            Object data = JSONUtil.parseObj(body).get("data");
-            Map<String, Integer> convert = Convert.convert(Map.class, data);
-            Integer userId = convert.get("userId");
-            stringBuilder.setLength(0);
-            writeToTXT("马甲号:" + majia + "     userId:" + userId );
+        BufferedReader reader = IoUtil.getReader(new BufferedReader(new InputStreamReader(new FileInputStream("C:\\Users\\cixingrui\\Desktop\\视频跟贴马甲号\\视频跟贴马甲号\\电视  .txt"), "GBK")));
+        while (true) {
+            String s = reader.readLine();
+            if (s != null) {
+                StringBuilder stringBuilder = new StringBuilder("http://user.m.163.com/api/dsf/user/createUser?productId=1&ibc=newsapp&token=123&passport=");
+                String majia = reader.readLine().split(",")[0];
+                stringBuilder.append(majia);
+                String body = HttpRequest.post(stringBuilder.toString()).body(new JSONObject()).execute().body();
+            }else{
+                System.out.println("执行结束");
+                break;
+            }
+//            Object data = JSONUtil.parseObj(body).get("data");
+//            Map<String, Integer> convert = Convert.convert(Map.class, data);
+//            Integer userId = convert.get("userId");
+//            stringBuilder.setLength(0);
+//            writeToTXT("马甲号:" + majia + "     userId:" + userId );
         }
     }
 
     /**
      * 换行写入txt
+     *
      * @param str
      */
     public static void writeToTXT(String str) {

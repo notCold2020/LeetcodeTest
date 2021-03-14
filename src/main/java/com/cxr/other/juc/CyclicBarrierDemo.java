@@ -7,7 +7,7 @@ import java.util.concurrent.Semaphore;
 public class CyclicBarrierDemo {
     public static void main(String[] args) throws InterruptedException {
         CyclicBarrier cyclicBarrier = new CyclicBarrier(3,()->{
-            System.out.println("先执行我");
+            System.out.println("先执行我");//突破屏障 之前 先执行这个👈
         });
 
         for (int i = 0; i < 7; i++) {
