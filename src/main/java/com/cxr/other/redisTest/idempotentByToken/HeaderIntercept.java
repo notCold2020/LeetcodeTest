@@ -1,7 +1,6 @@
-package com.cxr.other.redistest.idempotentByToken;
+package com.cxr.other.redisTest.idempotentByToken;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.method.HandlerMethod;

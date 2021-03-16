@@ -1,4 +1,4 @@
-package com.cxr.other.redistest;
+package com.cxr.other.redisTest;
 //redis 限流器
 
 import lombok.AllArgsConstructor;

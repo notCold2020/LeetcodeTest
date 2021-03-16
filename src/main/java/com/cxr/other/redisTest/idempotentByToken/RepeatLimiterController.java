@@ -1,4 +1,4 @@
-package com.cxr.other.redistest.idempotentByToken;
+package com.cxr.other.redisTest.idempotentByToken;
 
 import com.cxr.other.demo.entriy.User;
 import com.cxr.other.demo.service.UserService;

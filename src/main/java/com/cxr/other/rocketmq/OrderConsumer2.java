@@ -1,18 +1,15 @@
 package com.cxr.other.rocketmq;
 
-import com.alibaba.fastjson.JSON;
-import lombok.SneakyThrows;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.*;
 import org.apache.rocketmq.client.exception.MQClientException;
-import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.MessageExt;
 
 import java.util.List;
 
-public class OrderConsumer {
+public class OrderConsumer2 {
     public static void main(String[] args) throws MQClientException {
-        consumerOrderly();
+        consumerConcurrtly();
     }
 
     public static void consumerOrderly() throws MQClientException {
@@ -20,18 +17,13 @@ public class OrderConsumer {
         /**
          * MessageListenerOrderly 为每个messageQUeue加锁 消费消息之前 需要先获取这个MessageQueue的锁
          * 这样同个时间 同一个Queue的消息不被并发处理 但是不同Queue的消息可以并发处理
-         *
-         * 这个是对于MessageQueue来说的
-         * 就算是设置了MessageListenerOrderly，但是Provider把消息放到8个MessageQueue 依然是每个MessageQueue开一个线程 依旧不能顺序执行
          */
         consumer.registerMessageListener(new MessageListenerOrderly() {
-            @SneakyThrows
             @Override
             public ConsumeOrderlyStatus consumeMessage(List<MessageExt> list, ConsumeOrderlyContext consumeOrderlyContext) {
                 MessageExt messageExt = list.get(0);
                 String topic = messageExt.getTopic();
                 String mes = new String(messageExt.getBody());
-                Thread.sleep(5000L);
                 System.out.println("received new messages：        " + "topic:" + topic + "    mes:" + mes);
                 System.out.println("==========================");
                 return ConsumeOrderlyStatus.SUCCESS;
@@ -46,9 +38,6 @@ public class OrderConsumer {
         DefaultMQPushConsumer consumer = MqConfig.getConsumer();
         /**
          * MessageListenerConcurrently
-         *
-         * 如果是1个MessageQueue里面 有30个消息 设置了MessageListenerConcurrently 和 setConsumeMessageBatchMaxSize（5）
-         * 那么 就是开启6个线程 各5个 我猜的 但是挺有道理
          */
         consumer.registerMessageListener(new MessageListenerConcurrently() {
             @Override
@@ -58,7 +47,7 @@ public class OrderConsumer {
                 MessageExt messageExt = list.get(0);
                 String topic = messageExt.getTopic();
                 String mes = new String(messageExt.getBody());
-                System.out.println("received new messages：        " + "topic:" + topic + "    mes:" + mes + "    times:" + times);
+                System.out.println("received new messages：        " + "topic:" + topic + "    mes:" + mes +"    times:"+times);
                 System.out.println("==========================");
                 return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }

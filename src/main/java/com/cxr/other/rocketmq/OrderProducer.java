@@ -26,7 +26,8 @@ public class OrderProducer {
             SendResult sendResult = producer.send(message, (mqs, msg, arg) -> {
                 Integer id = (Integer) arg;//这一堆就是在配置messageQueue选择的规则
                 int index = id % mqs.size();
-                return mqs.get(index);
+                System.out.println("发送："+new String(message.getBody()));
+                return mqs.get(0);
             }, orderId);
 
             System.out.println("发送成功：sendResult: " + JSON.toJSONString(sendResult));

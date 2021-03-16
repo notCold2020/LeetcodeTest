@@ -1,4 +1,4 @@
-package com.cxr.other.redistest.idempotentByToken;
+package com.cxr.other.redisTest.idempotentByToken;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;

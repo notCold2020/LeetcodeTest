@@ -50,7 +50,7 @@ class ThreadPoolExecutorSelf {
             //如果核心线程数小于线程池容量，将任务加入队列并新建核心线程
             blockingQueue.put(task);
         } else if (size > poolSize) {
-//            addWorker();  非核心线程
+//            addWorker();  拒绝策略
         }
     }
 
@@ -75,7 +75,7 @@ class ThreadPoolExecutorSelf {
     /**
      * @description:具体进行工作的线程
      * @author:JerryG Worker才是真正执行任务的地方 如果不是核心线程
-     * 那就只加入到队列里面 如果是核心线程 那就也加入到work来执行
+     * 那就只加入到队列里面 如果是核心线程 那就也加入到worker来执行
      */
     class Worker implements Runnable {
         @Override

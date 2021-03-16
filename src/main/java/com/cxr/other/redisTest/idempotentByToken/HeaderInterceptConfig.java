@@ -1,4 +1,4 @@
-package com.cxr.other.redistest.idempotentByToken;
+package com.cxr.other.redisTest.idempotentByToken;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

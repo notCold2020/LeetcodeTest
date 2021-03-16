@@ -1,4 +1,4 @@
-package com.cxr.other.redistest;
+package com.cxr.other.redisTest;
 
 import com.cxr.other.demo.entriy.User;
 import com.cxr.other.demo.service.UserService;

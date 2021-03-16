@@ -10,7 +10,7 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class KafkaConsumer {
 
     Logger logger = LoggerFactory.getLogger(KafkaConsumer.class);

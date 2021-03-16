@@ -9,22 +9,22 @@ package com.cxr.algorithm.DynamicPlan.middle;
  */
 public class DifferentPathPlus {
     public static int uniquePathsWithObstacles(int[][] obstacleGrid) {
-         int num = 0;
-         for (int x = 0;x<obstacleGrid.length;x++){
-             int[] middle = obstacleGrid[x];
-             for (int y =0 ;y<middle.length;y++){
-                 if ((x==0||y==0)&&obstacleGrid[x][y]==1){
-                     num++;
-                 }else if (obstacleGrid[x][y]==1){
-                     num = num+2;
-                 }
-             }
-         }
-         return num;
+        int num = 0;
+        for (int x = 0; x < obstacleGrid.length; x++) {
+            int[] middle = obstacleGrid[x];
+            for (int y = 0; y < middle.length; y++) {
+                if ((x == 0 || y == 0) && obstacleGrid[x][y] == 1) {
+                    num++;
+                } else if (obstacleGrid[x][y] == 1) {
+                    num = num + 2;
+                }
+            }
+        }
+        return num;
     }
 
     public static void main(String[] args) {
-        int[][] test = new int[][]{{0,0,0},{0,1,0},{0,0,0}};
+        int[][] test = new int[][]{{0, 0, 0}, {0, 1, 0}, {0, 0, 0}};
         System.out.println(uniquePathsWithObstacles(test));
     }
 }

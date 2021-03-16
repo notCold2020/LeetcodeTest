@@ -1,13 +1,12 @@
 package com.cxr.other.kafka;
 
-import com.cxr.other.redistest.RedisTest;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.listener.AcknowledgingMessageListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
-@Component
+//@Component
 public class KafkaMessageListener implements AcknowledgingMessageListener<String, String> {
 
     static Logger logger = LoggerFactory.getLogger(KafkaMessageListener.class);

@@ -1,4 +1,4 @@
-package com.cxr.other.redistest;
+package com.cxr.other.redisTest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

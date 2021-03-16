@@ -10,10 +10,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.*;
 
-/**
- * Created by df on 2018/9/20.
- */
-
 @Service
 public class TheardQueryService {
 

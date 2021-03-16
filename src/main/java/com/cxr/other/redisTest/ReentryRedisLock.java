@@ -1,4 +1,4 @@
-package com.cxr.other.redistest;
+package com.cxr.other.redisTest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import redis.clients.jedis.Jedis;

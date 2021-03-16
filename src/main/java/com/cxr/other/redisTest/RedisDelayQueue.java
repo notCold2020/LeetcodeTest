@@ -1,4 +1,4 @@
-package com.cxr.other.redistest;
+package com.cxr.other.redisTest;
 
 import com.alibaba.fastjson.JSON;
 import lombok.AllArgsConstructor;

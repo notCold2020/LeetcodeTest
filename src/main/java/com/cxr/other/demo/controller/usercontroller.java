@@ -1,6 +1,7 @@
 package com.cxr.other.demo.controller;
 
 import com.cxr.other.demo.dao.testInter;
+import com.cxr.other.demo.entriy.User;
 import com.cxr.other.demo.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 public class usercontroller {
     @Autowired
     private UserService userService;
@@ -38,5 +39,12 @@ public class usercontroller {
         System.out.println(one.getClass().toString());
         logger.info("dddddd");
         return one;
+    }
+
+
+    @RequestMapping("/test/json")
+    private User tt(){
+        User user = new User(1,"yyy");
+        return user;
     }
 }

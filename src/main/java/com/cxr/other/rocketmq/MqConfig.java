@@ -16,6 +16,14 @@ public class MqConfig {
 
     public static DefaultMQPushConsumer getConsumer() throws MQClientException {
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("syncConsumer");
+        /**
+         * 批量消费的大小，也就是说当MQ消息从Broker拉取之后每次派发给我们每个消费类的大小，
+         *  consumeMessage(List<MessageExt> list) -->指这个list的Size 这不就是批量消费的个数吗
+         *  当消息堆积的时候 可以修改这个值
+         *  如果不设置 默认是1 其他的消费不过来的（比如从broker拉取了30个消息 一次就能消费5个 其他的就会提交线程来处理 concurrently!）
+         *  https://blog.csdn.net/cliuyang/article/details/109221653 : 辨析
+         */
+        consumer.setConsumeMessageBatchMaxSize(5);
         consumer.setNamesrvAddr("127.0.0.1:9876");
         consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
         //设置consumer所订阅的Topic和Tag，*代表全部的Tag

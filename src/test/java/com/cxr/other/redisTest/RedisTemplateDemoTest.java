@@ -1,4 +1,4 @@
-package com.cxr.other.redistest;
+package com.cxr.other.redisTest;
 
 import com.cxr.other.demo.entriy.User;
 import org.junit.jupiter.api.Test;
@@ -9,8 +9,6 @@ import org.springframework.data.redis.core.*;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class RedisTemplateDemoTest {

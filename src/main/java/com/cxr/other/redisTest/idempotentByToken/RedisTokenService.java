@@ -1,4 +1,4 @@
-package com.cxr.other.redistest.idempotentByToken;
+package com.cxr.other.redisTest.idempotentByToken;
 
 
 
