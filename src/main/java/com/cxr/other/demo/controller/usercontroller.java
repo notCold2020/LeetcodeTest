@@ -42,9 +42,4 @@ public class usercontroller {
     }
 
 
-    @RequestMapping("/test/json")
-    private User tt(){
-        User user = new User(1,"yyy");
-        return user;
-    }
 }

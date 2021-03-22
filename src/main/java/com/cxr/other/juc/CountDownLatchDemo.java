@@ -6,7 +6,7 @@ import java.util.concurrent.CountDownLatch;
 public class CountDownLatchDemo {
     public static void main(String[] args) throws InterruptedException {
         CountDownLatch countDownLatch = new CountDownLatch(8);
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 8; i++) {
             int finalI = i;
             new Thread(() -> {
                 System.out.println("---" + finalI);
