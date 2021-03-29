@@ -1,4 +1,4 @@
-package com.cxr.other.java8;
+package com.cxr.other.java8.stream;
 
 import lombok.*;
 

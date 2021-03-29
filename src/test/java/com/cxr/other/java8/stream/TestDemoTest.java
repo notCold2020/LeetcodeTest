@@ -1,7 +1,5 @@
 package com.cxr.other.java8.stream;
 
-import com.cxr.other.demo.service.UserService;
-import com.cxr.other.java8.Person;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

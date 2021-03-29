@@ -1,19 +1,15 @@
+import com.cxr.other.ListNode;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
 /**
- * 输入：s = "babad"
- * 输出："bab"
+ * 输入：head = [1,2,3,4,5], k = 2
+ * 输出：[4,5,1,2,3]
  */
 class Solution {
     public static void main(String[] args) {
-        String s = longestPalindrome("12");
-        System.out.println(s);
-    }
-
-    public static String longestPalindrome(String s) {
-        StringBuilder realDeviceName = new StringBuilder(s);
-        realDeviceName.append("ddd");
-        s = realDeviceName.toString();
-        return s;
+        new ArrayList<>().toArray()
     }
 }

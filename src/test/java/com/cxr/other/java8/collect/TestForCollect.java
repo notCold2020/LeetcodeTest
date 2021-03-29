@@ -1,19 +1,15 @@
 package com.cxr.other.java8.collect;
 
 import com.cxr.other.demo.service.UserService;
-import com.cxr.other.java8.Person;
-import lombok.experimental.var;
+import com.cxr.other.java8.stream.Person;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class TestForCollect {
