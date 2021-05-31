@@ -1,19 +1,28 @@
 package com.cxr.other.demo.entriy;
 
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.util.Date;
+
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User implements Serializable, Cloneable {
     private Integer id;
     private String userName;
     //    private String pwdddd;
-    private Useruser useruser;
+    @JsonProperty("ddd")
+    private Useruser userUser;
+    //    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date date;
 
     public User(Integer id, String userName) {
         this.id = id;
@@ -27,8 +36,18 @@ public class User implements Serializable, Cloneable {
 
     @Data
     @AllArgsConstructor
-    public class Useruser{
+    @NoArgsConstructor
+    static class Useruser {
+        @JsonInclude(JsonInclude.Include.NON_NULL)
         private String usus;
+
+        public String getUsus() {
+            return usus;
+        }
+
+        public void setUsus(String usus) {
+            this.usus = usus;
+        }
     }
 
 }

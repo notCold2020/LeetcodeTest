@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 public class Person implements  Comparable<Person>{
 	private String name;  // 姓名
-	private int salary; // 薪资
+	private Integer salary; // 薪资
 	private Integer age; // 年龄
 	private String sex; //性别
 	private String area;  // 地区

@@ -26,9 +26,11 @@ class TestDemoTest {
         // Optional.ofNullable - 允许传递为 null 参数
         Optional<Integer> a = Optional.ofNullable(value1);
 
-        // Optional.of - 如果传递的参数是 null，抛出异常 NullPointerException
-        Optional<Integer> b = Optional.of(value2);
+        // Optional.of - 如果传递的参数是 null，抛出异常 NullPointerException,自然也谈不上ofElse()了
+        Optional<Integer> b = Optional.of(value1);
         System.out.println(sum(a, b));
+
+
     }
 
     public Integer sum(Optional<Integer> a, Optional<Integer> b) {
@@ -38,9 +40,14 @@ class TestDemoTest {
         System.out.println("第一个参数值存在: " + a.isPresent());
         System.out.println("第二个参数值存在: " + b.isPresent());
 
-        // Optional.orElse - 如果值存在，正常返回这个值，否则返回默认值 也就是0
+        // Optional.orElse - 如果值存在(即不为null)，正常返回这个值，否则返回默认值 也就是0
         Integer value1 = a.orElse(new Integer(0));
-
+        //orElseGet就是传入参数是个供给性接口 可以增加一些逻辑
+        Integer integer = a.orElseGet(() -> {
+            return 1;
+        });
+        //orElseThrow()是个供给型的异常 new IllegalArgumentException("参数不对哦！")
+        a.orElseThrow(() -> new IllegalArgumentException("invalid exception code!"));
         //Optional.get - 获取值，值需要存在
         Integer value2 = b.get();
         return value1 + value2;
@@ -319,7 +326,7 @@ class TestDemoTest {
         //   (5+1)+ (5+2)+ (5+3)+ (5+4)+ (5+5)
         // 然后对上面的5个扩号里面的数字 执行第三个参数
         // (5+1) + (5+2) -1     +     8 -1 + 9 -1 +10 -1  上一个的结果作为现在的参数
-        System.out.println("##" + Arrays.asList(1, 2, 3, 4, 5).parallelStream().reduce(5, (x, y) -> x + y, (x, y) -> x + y -1));
+        System.out.println("##" + Arrays.asList(1, 2, 3, 4, 5).parallelStream().reduce(5, (x, y) -> x + y, (x, y) -> x + y - 1));
         System.out.println(Arrays.asList(1, 2, 3, 4, 5).stream().reduce(0, (x, y) -> x + y, (x, y) -> x + y));
         System.out.println(Arrays.asList(1, 2, 3, 4, 5).parallelStream().reduce(0, (x, y) -> x + y, (x, y) -> x + y));
         // 求最高工资方式1：
@@ -333,6 +340,6 @@ class TestDemoTest {
                 (MAX1, MAX2) -> MAX1 > MAX2 ? MAX1 : MAX2);
         //求最高工资方式3
         Optional<Integer> max3 = personList.stream().map(x -> x.getSalary()).max(Integer::compareTo);
-        System.out.println("最高工资：" + maxSalary + "," + maxSalary2 + "," +max3.get());
+        System.out.println("最高工资：" + maxSalary + "," + maxSalary2 + "," + max3.get());
     }
 }

@@ -1,15 +1,31 @@
-import com.cxr.other.ListNode;
+package com.cxr.other;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
+import com.cxr.other.utilsSelf.MySelfEnum;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
+
+import javax.swing.*;
+import java.util.*;
 
 /**
- * 输入：head = [1,2,3,4,5], k = 2
- * 输出：[4,5,1,2,3]
+ * 快速排序
  */
-class Solution {
-    public static void main(String[] args) {
-        new ArrayList<>().toArray()
+@Component
+class Solution implements ApplicationListener<ContextRefreshedEvent> {
+
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        System.out.println("onApplicationEvent----------------");
+    }
+
+    Solution() {
+        System.out.println("构造方法");
     }
 }
+

@@ -1,4 +1,4 @@
-package com.cxr.other.threadTest;
+package com.cxr.other.threadTest.theadLocal;
 
 /**
  * 什么是ThreadLocal
@@ -38,7 +38,7 @@ package com.cxr.other.threadTest;
  * 如何赋值呢，就是简单的拷贝一下
  */
 
-public class ThreadLocalTest {
+public class ThreadLocalTestAboutFather {
 
     public static void main(String[] args) throws InterruptedException {
 //        ThreadLocal<String> local = new ThreadLocal<>();//这样直接拿会返回null

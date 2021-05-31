@@ -12,8 +12,6 @@ import redis.clients.jedis.Response;
  * 缺点： 能知道1-10s内有多少次请求，但是2-11s的请求数不知道
  * 时间滑动窗口
  * 下面介绍这种
- * Author liurenwang
- * time 2020-8-5
  */
 @AllArgsConstructor
 public class RedisSimpleRateLimiter {
@@ -27,6 +25,7 @@ public class RedisSimpleRateLimiter {
         //大量操作一次性执行
         Pipeline pipeline = jedis.pipelined();
         pipeline.multi();
+
         pipeline.zadd(key, now, "" + now);//key , score , value
         //删除now-period*1000秒之前的数据（也就是说保留periods秒之内的数据）
         // 看清楚了这是直接删除了
@@ -36,6 +35,7 @@ public class RedisSimpleRateLimiter {
         Response<Long> count = pipeline.zcard(key);//返回count
         //这里给key设置过期时间，是防止冷用户占用内存
         pipeline.expire(key, period + 1);
+
         pipeline.exec();
         pipeline.close();
         //看看redis里面存的消息数量是不是小区我们限流的
@@ -46,7 +46,8 @@ public class RedisSimpleRateLimiter {
         Jedis jedis = new RedisUtil().getJedis();
         RedisSimpleRateLimiter redisSimpleRateLimiter = new RedisSimpleRateLimiter(jedis);
         for (int x = 0; x < 15; x++) {
-            System.out.println(redisSimpleRateLimiter.isActionAllowed("liurenwang", "reply", 10, 2));
+            //10s内只能有两次 前两个参数拼接唯一key
+            System.out.println(redisSimpleRateLimiter.isActionAllowed("cixingrui", "demo", 10, 2));
             Thread.sleep(1000l);
         }
     }

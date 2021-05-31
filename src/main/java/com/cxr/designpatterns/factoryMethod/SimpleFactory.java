@@ -1,4 +1,4 @@
-package com.cxr.designpatterns.factory;
+package com.cxr.designpatterns.factoryMethod;
 
 abstract class INoodles {
     /**

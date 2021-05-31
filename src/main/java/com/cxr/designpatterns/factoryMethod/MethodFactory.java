@@ -1,4 +1,4 @@
-package com.cxr.designpatterns.factory;
+package com.cxr.designpatterns.factoryMethod;
 
 /**
  * 比如新增摩拜类 实现Car接口 新增摩拜工厂类 实现CarFactory接口 没有改动原来的代码！

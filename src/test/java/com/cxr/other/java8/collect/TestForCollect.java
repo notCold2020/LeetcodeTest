@@ -260,10 +260,21 @@ class TestForCollect {
         ArrayList<Person> collect = personList.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(new Comparator<Person>() {
             @Override
             public int compare(Person o1, Person o2) {
-                return o1.getSalary() - o2.getSalary();
+//                return o1.getSalary() - o2.getSalary();
+                return o1.getSalary().compareTo(o2.getSalary());
             }
         })), ArrayList::new));
         System.out.println("去重后：" + collect);
+    }
+
+    /**
+     * 关于int和integer的互相转换，因为数组是int的，当我们想操作int数组的时候会用到
+     */
+    @Test
+    void test09() {
+        //boxed():int->integer
+        //mapToInt:需要一个函数式接口，Integer的intValue方法就行，能吧integer->int
+        Arrays.stream(new int[]{1, 2, 3, 4}, 0, 3).boxed().mapToInt(Integer::intValue).toArray();
     }
 
 }

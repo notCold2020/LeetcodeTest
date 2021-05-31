@@ -59,6 +59,9 @@ public class AuthorityInterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         /**
          * 请求处理完毕回调方法
+         * 该方法将在整个请求完成之后，也就是DispatcherServlet渲染了视图执行。
+         * （这个方法的主要作用是用于清理资源的）
+         * 比如清理ThreadLocal方法
          */
         System.out.println("afterCompletion");
     }

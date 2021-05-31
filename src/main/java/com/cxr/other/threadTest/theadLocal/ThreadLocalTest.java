@@ -1,8 +1,6 @@
-package com.cxr.other.threadTest;
+package com.cxr.other.threadTest.theadLocal;
 
-import javax.naming.InitialContext;
-
-public class MyDemo01 {
+public class ThreadLocalTest {
     //共享变量
     private String content;
 
@@ -19,7 +17,7 @@ public class MyDemo01 {
      * 如果下面sleep一会 的确能解决 那是因为sleep让Thread 1s 后才start
      */
     public static void main(String[] args) throws InterruptedException {
-        MyDemo01 demo01 = new MyDemo01();
+        ThreadLocalTest demo01 = new ThreadLocalTest();
         for (int i = 0; i < 5; i++) {
             Thread thread = new Thread(() -> {
                 demo01.setContent(Thread.currentThread().getName() + "的数据");
@@ -33,7 +31,7 @@ public class MyDemo01 {
     }
 }
 
-class MyDemo02 {
+class ThreadLocalTest02 {
     /**
      * 把不同线程的数据存在不同的ThreadLocalMap里面
      * A线程存在A Map里面
@@ -69,7 +67,7 @@ class MyDemo02 {
      */
     public static void main(String[] args) throws InterruptedException {
         try {
-            MyDemo02 demo02 = new MyDemo02();
+            ThreadLocalTest02 demo02 = new ThreadLocalTest02();
 //            demo02.getContent();
             for (int i = 0; i < 5; i++) {
                 Thread thread = new Thread(() -> {

@@ -1,4 +1,4 @@
-package com.cxr.shiro;
+package com.cxr.other.permissionDemo.shiro;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;

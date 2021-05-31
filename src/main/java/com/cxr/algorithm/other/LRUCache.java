@@ -4,10 +4,30 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * 一些思考：
+ * 1。数据结构到底是怎样的 存了什么数据？
+ * 我们操作的都是HashMap key可以是我们要存的缓存的名字 value可以是数据。 比如 "name" : "张三"
+ * 我们希望实现的就是在get("name")的时候 这个value能自己往前移动到头部
+ * 但是我们现在要实现lru 需要让他自己可以排序 那么只有hashmap是不够的 需要有一种可以前后移动的->双向链表
+ * 所以数据结构变成了。我们存，正常存。但是真实的存储是冗余了一份key在双向链表中（双向链表也是有key value prev next属性的）
+ * 而我们get的时候 是get的HashMap 返回value(DListNode).value 试问除了hashmap谁能通过key拿到value呢？-> 通过name拿张三
+ *
+ * 比如我们存key:1 value:1 那么永远都是这个关系 我们修改的并不是值 而且这个双向链表的顺序 也就是node节点的prev next指针
+ * 我们不就是通过修改指针的方式变相改变节点顺序吗？！
+ *
+ * 2。一共new了几次DLinkedNode
+ * 如果put10次 就是new 10次 因为每次如果不存在，那么就new 看源码啊大哥
+ *
+ * 3。至始至终有几个双向链表呢
+ * 一个。cache这个map存的不过是个指针而已。我们都是在同一个链表上进行操作鸭
+ */
 public class LRUCache extends LinkedHashMap<Integer, Integer> {
 
     public static void main(String[] args) {
-        LRUCache lruCache = new LRUCache(3);
+        LRU lruCache = new LRU(3);
+        lruCache.put(1, 1);
+        lruCache.put(1, 1);
         for (int i = 0; i < 10; i++) {
             lruCache.put(i, i);
         }
@@ -54,14 +74,15 @@ class LRU {
         }
 
         public DLinkedNode(int _key, int _value) {
+            System.out.println("new了一次,key:" + _key + ",value:" + _value);
             key = _key;
             value = _value;
         }
     }
 
     private Map<Integer, DLinkedNode> cache = new HashMap<Integer, DLinkedNode>();
-    private int size;
-    private int capacity;
+    private int size;//当前容量
+    private int capacity;//最大容量
     private DLinkedNode head, tail;
 
     public LRU(int capacity) {
@@ -102,7 +123,7 @@ class LRU {
                 size--;
             }
         } else {
-            // 如果 key 存在，先通过哈希表定位，再修改 value，并移到头部
+            //map的key存在，覆盖node的value，并把node移到头部
             node.value = value;
             moveToHead(node);
         }
@@ -119,8 +140,10 @@ class LRU {
          */
         node.prev = head;
         node.next = head.next;
-        head.next = node;
+        //这俩顺序不能反
         head.next.prev = node;
+        head.next = node;
+
     }
 
     private void removeNode(DLinkedNode node) {

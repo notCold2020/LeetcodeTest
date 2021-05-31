@@ -1,4 +1,4 @@
-package com.cxr.shiro;
+package com.cxr.other.permissionDemo.shiro;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
