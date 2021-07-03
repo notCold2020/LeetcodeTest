@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
      * 前置通知
      */
 
-    @Pointcut("execution(* com.cxr.other.point.AspectTest.beforeTest(..))")
+    @Pointcut("execution(* com.cxr.other.point.AspectTest.beforeTest())")
     private void beforePointcut(){
         logger.info("我是中间的方法，我不知道自己是干啥的，我也不会被输出。。。");
     }

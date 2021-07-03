@@ -17,37 +17,15 @@ import java.util.Date;
 public class User implements Serializable, Cloneable {
     private Integer id;
     private String userName;
-    //    private String pwdddd;
-    @JsonProperty("ddd")
-    private Useruser userUser;
-    //    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private String pwdddd;
+
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date date;
 
     public User(Integer id, String userName) {
         this.id = id;
         this.userName = userName;
-    }
-
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    static class Useruser {
-        @JsonInclude(JsonInclude.Include.NON_NULL)
-        private String usus;
-
-        public String getUsus() {
-            return usus;
-        }
-
-        public void setUsus(String usus) {
-            this.usus = usus;
-        }
     }
 
 }

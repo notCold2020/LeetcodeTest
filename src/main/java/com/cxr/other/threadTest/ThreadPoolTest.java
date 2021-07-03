@@ -37,27 +37,33 @@ class ThreadPoolMethod {
         final List<Integer> list = new ArrayList<>();
         final Random random = new Random();
         ExecutorService executorService = Executors.newSingleThreadExecutor();
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 1; i++) {
             Future<String> submit = executorService.submit(() -> {
                 list.add(random.nextInt());
-                Thread.sleep(2000);
+                Thread.sleep(2);
                 return "我是submit的返回值";
             });
-            System.out.println("submit:" + submit.get());
+//            System.out.println("submit:" + submit.get());
         }
         executorService.shutdown();
         /**
+         * 这个方法就是判断线程池是不是真的执行完了，因为shutdown shutdownnow只是开始执行结束线程池
+         *
+         * 三种情况会放行：----> 不然当前线程就阻塞 timeout 时间
          * 1.等所有已提交的任务（包括正在跑的和队列中等待的）执行完
          * 2.或者等超时时间到
-         * 3.或者线程被中断，抛出InterruptedException   ----> 不然当前线程就阻塞
-         * 说白了这不就是个保险吗 设置的时间过了 必然结束线程池
+         * 3.或者线程被中断，抛出InterruptedException
+         *
+         * 说白了这不就是个保险吗 设置的时间过了 我们可以看看线程池里面的任务结束没，要是结束了就皆大欢喜，没结束就手动结束或者怎么样想想办法。
          *
          * awaitTermination:(放在shutdown()之后  不然必然是返回false)
-         * 判断线程池中的线程是否在规定时间内执行完/timeout时间后线程池是否被关闭
+         * 判断线程池中的线程是否在规定时间内执行完/timeout时间后线程池是否被关闭  返回个boolean
          */
-        executorService.awaitTermination(1, TimeUnit.DAYS);
+        boolean b = executorService.awaitTermination(500, TimeUnit.SECONDS);
+        System.out.println(b);
         System.out.println(System.currentTimeMillis() - start);
         System.out.println("size:" + list.size());
+        System.out.println("线程池已经关闭");
 
     }
 }

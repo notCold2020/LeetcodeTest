@@ -1,5 +1,6 @@
 package com.cxr.other.demo.dao;
 
+import com.cxr.other.demo.entriy.Student;
 import com.cxr.other.demo.entriy.Teacher;
 import com.cxr.other.demo.entriy.User;
 import org.junit.jupiter.api.Test;
@@ -34,10 +35,11 @@ public class userDaoTest {
 
     @Test
     void insertUser() {
-//        User user = new User();
-//        user.setUserName("插入测试");
-//        user.setPwd("测试密码");
-//        userDao.insertUser(user);
+        User user = new User();
+        user.setId(3);
+        user.setUserName("张三");
+        user.setPwdddd("123456");
+        userDao.insertUser(user);
     }
 
     @Test
@@ -53,17 +55,23 @@ public class userDaoTest {
     @Test
     void insertByMap() {
         Map<String, Object> map = new HashMap<>();
-        map.put("id", 11);
-        map.put("userName", 1);
-        map.put("password", 1);
+        map.put("id", 2); //map的key对应xml里面的#{id,jdbcType=VARCHAR }
+        map.put("userName", "李四");
+        map.put("password", "6666666");
 
-        userDao.insert(map);
+        userDao.insertByMap(map);
     }
 
     @Test
     void selectUser() {
-        List<User> users = userDao.selectUser("李四");
+        List<User> users = userDao.selectUser("张三");
         for (User u1 : users) {
+            /**
+             * select id,user_name from user；
+             * 没有查询的字段就是null呗
+             * User(id=1, userName=张三, pwdddd=null, date=null)
+             * User(id=3, userName=张三, pwdddd=null, date=null)
+             */
             System.out.println(u1);
         }
     }
@@ -77,10 +85,26 @@ public class userDaoTest {
     }
 
     @Test
-    void selectStudent() {
-        List<Teacher> students = userDao.selectTeacher2();
-        for (Teacher student : students) {
+    void selectTeacher() {
+        /**
+         * Student(id=1, name=张三, teacher=Teacher(id=0, name=张三老师, students=null))
+         * Student(id=2, name=李四, teacher=Teacher(id=0, name=李四老师, students=null))
+         *
+         * <association property="teacher" javaType="com.cxr.other.demo.entriy.Teacher">
+         *             <result property="name" column="tName"/> 再说一遍property只对应实体的属性名字
+         * </association>
+         */
+        List<Student> students = userDao.selectTeacher();
+        for (Student student : students) {
             System.out.println(student);
+        }
+    }
+
+    @Test
+    void selectTeacher2() {
+        List<Teacher> teachers = userDao.selectTeacher2();
+        for (Teacher teacher : teachers) {
+            System.out.println(teacher);
         }
     }
 
@@ -113,39 +137,6 @@ public class userDaoTest {
     void getListMapTest() {
         List<Map<String, Object>> listMap = userDao.getListMap();
         System.out.println(listMap);
-    }
-
-    @Test
-    void t1() {
-        LinkedList<Integer> list = new LinkedList<>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        list.add(1, 80);
-        System.out.println(list);
-    }
-
-    public static int calc(int n) {
-        try {
-            n += 1;
-            if (n / 0 > 0) {
-                n += 1;
-            } else {
-                n -= 10;
-            }
-            return n;
-        } catch (Exception e) {
-            n++;
-        }
-        n++;
-        return n++;
-    }
-
-    @Test
-    void tt() {
-        for (char c : "没人比我更懂java".toCharArray()) {
-            System.out.println(c);
-        }
     }
 
 }

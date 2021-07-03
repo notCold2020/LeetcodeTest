@@ -2,7 +2,9 @@ package com.cxr.other.point;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AspectTest {
     /**
      * 这个实际上是代理对象来进行操作 所以如果我们想实现一个请求 如果请求中携带某个参数 我们就让这个请求return掉 before()方法是不行的
@@ -14,11 +16,11 @@ public class AspectTest {
      */
     static Logger logger = LoggerFactory.getLogger(AspectTest.class);
 
-    public static void main(String[] args) {
-        beforeTest();
-    }
-
-    static void beforeTest() {
+    /**
+     * com.cxr.other.demo.controller.UserController#aspectTest
+     * 看这里👆👆👆👆👆👆
+     */
+    public void beforeTest() {
         logger.info("执行操作");
     }
 }

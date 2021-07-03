@@ -12,7 +12,8 @@ package com.cxr.other.threadTest.theadLocal;
  * 在插入过程中，根据threadLocalHashCode 定位到要将此对象（ThreadLocal+value）插入到位置i上,
  * 如果当前位置上为空，就初始化一个entry对象放在位置i上
  * 如果当前位置有对象，则判断当前位置是否是当前对象，如果是，则重新设置值
- * 如果不是当前对象，则找下一个空位置
+ * 如果不是当前对象，则找下一个空位置(线性探测法)
+ *
  * get过程:
  * 根据根据threadLocalHashCode定位。--》可能会很慢
  * <p>
@@ -34,7 +35,7 @@ package com.cxr.other.threadTest.theadLocal;
  * getMap 返回的是一个inheritableThreadLocals属性变量 (ThreadLocalMap) ==》Thread类的static 变量
  * 在 Thread 类的构造方法中，调用了init（）方法，这个方法调用createInheritedMap方法：
  * 作用，如果父线程的inheritableThreadLocals 不为空，则
- * 将当前线程的inheritableThreadLocals设置父线程的inheritableThreadLocals赋值给子线程，
+ * 将当前线程的inheritableThreadLocals设置为父线程的inheritableThreadLocals，
  * 如何赋值呢，就是简单的拷贝一下
  */
 

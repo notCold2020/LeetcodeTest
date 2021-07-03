@@ -18,7 +18,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 
-@Configuration  //也得注入进ioc容器
+//@Configuration  //也得注入进ioc容器
 
 @EnableScheduling //写了就行 不用非得写在启动类上
 @EnableAsync

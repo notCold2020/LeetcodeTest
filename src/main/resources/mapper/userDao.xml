@@ -12,44 +12,56 @@
     </resultMap>
 
     <select id="getUser" resultType="com.cxr.other.demo.entriy.User">
-        select * from user where user_name = #{name,jdbcType=VARCHAR} and pwd = #{pwd,jdbcType=VARCHAR}
+        select *
+        from user
+        where user_name = #{name,jdbcType=VARCHAR}
+          and pwd = #{pwd,jdbcType=VARCHAR}
     </select>
 
     <select id="getUserByName" resultMap="User">
-        select * from webwork.user where username = #{name}
+        select *
+        from webwork.user
+        where username = #{name}
     </select>
 
     <select id="getStringUsername" resultType="java.lang.String">
-        select user_name from user where id = #{id}
+        select user_name
+        from user
+        where id = #{id}
     </select>
 
-    <insert id="insertUser" parameterType="com.cxr.other.demo.entriy.User" >
-        insert into user (id,user_name,pwd) values
-        (#{id,jdbcType=INTEGER},#{userName,jdbcType=VARCHAR},#{pwd,jdbcType=VARCHAR})
+    <insert id="insertUser" parameterType="com.cxr.other.demo.entriy.User">
+        insert into user (id, user_name, pwd)
+        values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{pwdddd,jdbcType=VARCHAR})
     </insert>
 
-    <update id="updateUserByid" >
-        update user set user_name = #{userNamee,jdbcType=VARCHAR} where id = #{id,jdbcType=VARCHAR}
+    <update id="updateUserByid">
+        update user
+        set user_name = #{userNamee,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
     </update>
 
     <delete id="deleteUserById">
-        delete from user where id = #{iddd,jdbcType=INTEGER}
+        delete
+        from user
+        where id = #{iddd,jdbcType=INTEGER}
     </delete>
 
-    <insert id="insert" parameterType="java.util.Map">
-        insert into user (id,user_name,pwd) values
-        (#{id},#{userName},#{password});
+    <insert id="insertByMap" parameterType="java.util.Map">
+        insert into user (id, user_name, pwd)
+        values (#{id}, #{userName}, #{password});
     </insert>
     <select id="selectUser"
             resultType="com.cxr.other.demo.entriy.User">
-        select id,user_name from user
-         where name = #{name,jdbcType=VARCHAR }
+        select id, user_name
+        from user
+        where user_name = #{name,jdbcType=VARCHAR }
     </select>
 
     <insert id="insertList" parameterType="list">
         insert into user (id,user_name,pwd) values
         <foreach collection="list" item="item" separator=",">
-           (
+            (
             #{item.id,jdbcType=INTEGER},
             #{item.userName,jdbcType=VARCHAR},
             #{item.pwdddd,jdbcType=VARCHAR}
@@ -58,63 +70,70 @@
     </insert>
 
 
-<!--    <resultMap id="userr" type="user">-->
-<!--        <result column="id" property="id"/>-->
-<!--        <result column="user_name" property="userName"/>-->
-<!--        <result column="pwd" property="pwd"/>-->
-<!--    </resultMap>-->
+    <!--    <resultMap id="userr" type="user">-->
+    <!--        <result column="id" property="id"/>-->
+    <!--        <result column="user_name" property="userName"/>-->
+    <!--        <result column="pwd" property="pwd"/>-->
+    <!--    </resultMap>-->
 
     <select id="selectByLike" resultType="com.cxr.other.demo.entriy.User">
-<!--        这就是sql字符串拼接函数↓ -->
-<!--        select * from user where user_name like  concat(concat(#{mohu,jdbcType=VARCHAR},'%'))-->
-        select * from user where user_name like  #{mohu,jdbcType=VARCHAR}"%"
+        <!--        这就是sql字符串拼接函数↓ -->
+        <!--        select * from user where user_name like  concat(concat(#{mohu,jdbcType=VARCHAR},'%'))-->
+        select * from user where user_name like #{mohu,jdbcType=VARCHAR}"%"
     </select>
 
     <resultMap id="StudentTeacher" type="com.cxr.other.demo.entriy.Student">
         <result property="id" column="sid"/>
         <result property="name" column="sname"/>
-<!--        <association property="teacher" javaType="com.cxr.other.demo.entriy.Teacher">-->
-<!--            <result property="name" column="tName"/>-->
-<!--        </association>-->
+        <association property="teacher" javaType="com.cxr.other.demo.entriy.Teacher">
+            <result property="name" column="tName"/> <!-- 再说一遍property只对应实体的 属性 名字 -->
+        </association>
     </resultMap>
 
     <select id="selectTeacher" resultMap="StudentTeacher">
-        select s.id as sid,s.name as sname,t.name  as tName from teacher t,student s where t.id = s.tid
+        select s.id        as ssssssid,
+               s.user_name as snameeeeeee,
+               t.tName     as tNameeeeeeee
+--             别名好像真的没啥用
+        from teacher t,
+             user s
+        where t.sId = s.id
     </select>
 
 
     <resultMap id="TeacherStudent" type="com.cxr.other.demo.entriy.Teacher">
-        <result property="id" column="tid"/>
-        <result property="name" column="tname"/>
-        <collection property="students" ofType="com.cxr.other.demo.entriy.Student">
-            <result property="id" column="sid"/>
-            <result property="name" column="sname"/>
-            <result property="tid" column="tid"/>
+        <result property="id" column="id"/>
+        <result property="name" column="tName"/>
+        <collection property="students" ofType="com.cxr.other.demo.entriy.Student" >
+            <result property="id" column="id"/>
+            <result property="name" column="user_name"/>
         </collection>
     </resultMap>
-        <!--    Teacher(id=1,
-                        name=慈老师,
-                        students=[
-                             Student(id=1, name=小明, tid=1),
-                             Student(id=2, name=小红, tid=1),
-                             Student(id=3, name=小张, tid=1),
-                             Student(id=4, name=小李, tid=1)
-                         ]
-         )-->
+    <!--    Teacher(id=1,
+                    name=慈老师,
+                    students=[
+                         Student(id=1, name=小明, tid=1),
+                         Student(id=2, name=小红, tid=1),
+                         Student(id=3, name=小张, tid=1),
+                         Student(id=4, name=小李, tid=1)
+                     ]
+     )-->
     <select id="selectTeacher2" resultMap="TeacherStudent">
-        select t.id tid,t.name tname,s.id ,s.name sname from teacher t,student s where t.id = s.tid and t.id = 1
+        select t.tName as tName,u.id,u.user_name,u.pwd from user u,teacher t where t.sId = u.id;
     </select>
 
     <select id="getUserList" resultType="com.cxr.other.demo.entriy.User" parameterType="list">
-        select * from user    where id in
+        select * from user where id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
             #{item}
         </foreach>
     </select>
     <select id="getUserMap" resultType="java.util.Map">
-        select user_name as UserNamee,id,pwd from user
+        select user_name as UserNameeeeeeee, id, pwd
+--         别名映射到map的时候有用
+        from user
     </select>
     <select id="getListMap" resultType="java.util.Map">
-        select * from user
+        select user_name,pwd from user
     </select>
 </mapper>

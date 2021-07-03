@@ -1,7 +1,9 @@
 package com.cxr.other.permissionDemo.byRBAC;
 
 import com.alibaba.dubbo.common.utils.CollectionUtils;
+import lombok.SneakyThrows;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -29,10 +31,10 @@ public class PermissionMethodCollectionListener implements ApplicationListener<C
      * 这一套组合拳很有趣我们一一细说：
      * 先是实现了ApplicationContextAware，把这个上下文信息拿到 ，里面包含了打了xxx注解的方法
      * 然后实现了ApplicationListener接口 （实现这个接口的类在 完整的上下文ready 的事件完成后 会触发ContextRefreshedEvent事件）
-     * <p>
+     *
      * 因为@Component 需要初始化（setApplicationContext了）注入容器，这一系列都 setApplicationContext了,自然广播ContextRefreshedEvent事件
      * 再触发listener事件 拿到打了注解的方法
-     * <p>
+     *
      * ==
      * 插话：
      * ApplicationContextAware是属于bean的生命周期 litener是IOC容器的初始化流程 肯定是前者优先
@@ -41,10 +43,16 @@ public class PermissionMethodCollectionListener implements ApplicationListener<C
     @Autowired
     private ApplicationContext applicationContext;
 
+    @SneakyThrows
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         //一个bean只触发一次。。
+        int i = applicationContext.hashCode();
         this.applicationContext = applicationContext;
+        // 遍历所有Controller
+        Map<String, Object> beanMap = applicationContext.getBeansWithAnnotation(Controller.class);
+        Collection<Object> beans = beanMap.values();
+        System.out.println("1");
     }
 
     @Override
@@ -103,5 +111,4 @@ public class PermissionMethodCollectionListener implements ApplicationListener<C
     private boolean isApiMethod(Method method) {
         return AnnotationUtils.findAnnotation(method, RequestMapping.class) != null;
     }
-
 }

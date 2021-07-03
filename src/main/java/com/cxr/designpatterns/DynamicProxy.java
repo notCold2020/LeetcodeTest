@@ -1,7 +1,5 @@
 package com.cxr.designpatterns;
 
-import org.springframework.cglib.core.DebuggingClassWriter;
-import org.springframework.cglib.proxy.Callback;
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.MethodInterceptor;
 import org.springframework.cglib.proxy.MethodProxy;
@@ -28,6 +26,7 @@ class FruitImpl implements Fruit, Fruit2 {
     @Override
     public void eat() {
         //如果有这个方法 那么就一定执行咱们自己实现的方法 也就是本方法
+        System.out.println("吃水果");
     }
 }
 
@@ -58,6 +57,13 @@ class StaticProxy implements Fruit {
     private void after() {
         System.out.println("善后工作:扔垃圾");
     }
+
+    public static void main(String[] args) {
+        /**
+         * 静态代理调用方式，需要new 代理类().
+         */
+        new StaticProxy(new FruitImpl()).eat();
+    }
 }
 // ####################jdk动态代理####################################################
 
@@ -72,11 +78,6 @@ class StaticProxy implements Fruit {
  */
 public class DynamicProxy implements InvocationHandler {
 
-    private FruitImpl fruitImpl;
-
-    public void setTarget(FruitImpl fruitImpl) {
-        this.fruitImpl = fruitImpl;
-    }
 
     /**
      * Object proxy:jdk创建的代理对象 无需赋值
@@ -86,19 +87,19 @@ public class DynamicProxy implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         System.out.println("这里可以调用其他类的方法，表示增强");
-        method.invoke(fruitImpl, args);
+        Object invoke = method.invoke(new FruitImpl(), args);
         System.out.println("这里同理+1");
-        return null;
+        return method;
     }
 }
 
-//动态代理对象工厂
-class DynamicProxyFactory {
-    public static Object getProxy(FruitImpl fruitImpl) {
-        DynamicProxy handle = new DynamicProxy();
-        handle.setTarget(fruitImpl);
-        Fruit proxy = (Fruit) Proxy.newProxyInstance(FruitImpl.class.getClassLoader(), FruitImpl.class.getInterfaces(), handle);
-        return proxy;
+
+class DynamicProxyTest{
+    public static void main(String[] args) {
+        Fruit fruit = (Fruit) Proxy.newProxyInstance(FruitImpl.class.getClassLoader(),
+                                                     FruitImpl.class.getInterfaces(),
+                                                     new DynamicProxy());
+        fruit.eat();
     }
 }
 
@@ -106,7 +107,9 @@ class DynamicProxyFactory {
 /**
  * 动态代理和静态代理都需要子类实现接口
  * 那么如果有的类没有实现接口呢？
- * cglib代理会虚拟出一个继承了目标类的子类
+ *
+ * cglib代理会虚拟出一个继承了目标类的子类  被代理对象类的class文件加载进来，通过修改其字节码生成子类来处理
+ * --》所以代理类不能加final修饰，否则会报错
  * 盲猜是 子类对父类方法进行增强
  */
 class MyMethodInterceptor implements MethodInterceptor {

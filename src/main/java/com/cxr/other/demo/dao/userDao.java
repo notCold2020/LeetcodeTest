@@ -24,17 +24,17 @@ public interface userDao {
 
     void updateUserByid(@Param("id") String id, @Param("userNamee") String name);
 
-    void deleteUserById(Integer iddd);
+    void deleteUserById(Integer iddd);//不用@Param，名字就叫iddd,可以点进去
 
-    void insert(Map<String, Object> mapp);
+    void insertByMap(Map<String, Object> mapp);//靠着 id="insertByMap" 才会有左侧这个红色的→箭头
 
     List<User> selectUser(String name);
 
     List<User> selectByLike(String mohu);
 
-    List<Student> selectTeacher();
+    List<Student> selectTeacher();//一个学生有一个老师
 
-    List<Teacher> selectTeacher2();
+    List<Teacher> selectTeacher2();//一个老师有多个学生
 
     List<User> getUserList(List<Integer> list);
 
