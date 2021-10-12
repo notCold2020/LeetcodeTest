@@ -39,8 +39,11 @@ mybatis:
 
 
 logging:
-  file:
+  level:
+    com.cxr: info
 #    path: D:\NetEase
 #    name: majia.log
 server:
   port: 8081
+
+testValue: test

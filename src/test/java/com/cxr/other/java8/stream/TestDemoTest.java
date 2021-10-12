@@ -1,8 +1,13 @@
 package com.cxr.other.java8.stream;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.*;
@@ -341,5 +346,37 @@ class TestDemoTest {
         //求最高工资方式3
         Optional<Integer> max3 = personList.stream().map(x -> x.getSalary()).max(Integer::compareTo);
         System.out.println("最高工资：" + maxSalary + "," + maxSalary2 + "," + max3.get());
+    }
+
+    @Autowired
+    private com.cxr.other.spring.springListenerEvent.Test test;
+
+    @Test
+    void test06() {
+        @Data
+        @AllArgsConstructor
+        @NoArgsConstructor
+        class Person {
+            String i;
+            Integer age;
+            String addr;
+            double l;
+        }
+
+        List<Person> personList = Lists.newArrayList(
+                new Person("i", 18, "杭州", 999.9),
+                new Person("am", 19, "温州", 777.7),
+                new Person("iron", 21, "杭州", 888.8),
+                new Person("iron", 17, "宁波", 888.8)
+        );
+
+        // 可以避免并发修改异常 ,去除list中某元素
+        boolean removed = personList.removeIf(person -> "杭州".equals(person.getAddr()));
+        System.out.println(personList);
+
+        List<String> list = Arrays.asList("springboot", "springcloud", "redis", "git", "netty", "java", "html", "docker");
+        // 判断是否所有元素长度大于五
+        boolean result1 = list.stream().allMatch(obj -> obj.length() > 5);
+        boolean result2 = list.stream().anyMatch(obj -> obj.length() > 5);
     }
 }

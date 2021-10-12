@@ -3,6 +3,9 @@ package com.cxr.other.demo.dao;
 import com.cxr.other.demo.entriy.Student;
 import com.cxr.other.demo.entriy.Teacher;
 import com.cxr.other.demo.entriy.User;
+import com.cxr.other.demo.service.UserService;
+import com.cxr.other.spring.beanFactoryPostProcessorDemo.BeanFactoryPostProcessorTest;
+import com.cxr.other.utilsSelf.ApplicationUtils;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,9 +39,7 @@ public class userDaoTest {
     @Test
     void insertUser() {
         User user = new User();
-        user.setId(3);
-        user.setUserName("张三");
-        user.setPwdddd("123456");
+//        user.setPwdddd("123456");
         userDao.insertUser(user);
     }
 
@@ -72,7 +73,7 @@ public class userDaoTest {
              * User(id=1, userName=张三, pwdddd=null, date=null)
              * User(id=3, userName=张三, pwdddd=null, date=null)
              */
-            System.out.println(u1);
+            System.out.println(u1.getUserName());
         }
     }
 
@@ -127,9 +128,9 @@ public class userDaoTest {
     @Test
     void insertListTest() {
         List<User> list = new ArrayList<>();
-//        list.add(new User(222, "222", "222"));
-//        list.add(new User(2272, "222", "222"));
-//        list.add(new User(22772, "222", "222"));
+        list.add(new User(222, "222", "222"));
+        list.add(new User(2272, "222", "222"));
+        list.add(new User(22772, "222", "222"));
         userDao.insertList(list);
     }
 
@@ -137,6 +138,19 @@ public class userDaoTest {
     void getListMapTest() {
         List<Map<String, Object>> listMap = userDao.getListMap();
         System.out.println(listMap);
+    }
+
+    @Autowired
+    private UserService userService1;
+
+    @Autowired
+    private UserService userService2;
+
+    @Test
+    void et(){
+        BeanFactoryPostProcessorTest tForBeanFactoryPostProcessor = (BeanFactoryPostProcessorTest)ApplicationUtils.getBean("beanFactoryPostProcessorTest");
+        String name = tForBeanFactoryPostProcessor.getName();
+        System.out.println(name);
     }
 
 }

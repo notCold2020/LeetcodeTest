@@ -11,7 +11,7 @@ package com.cxr.designpatterns.strategyMethod;
  * 针对不同的策略做出对应行为，达到行为解偶
  *
  * 2.线程池中的策略模式
- * 就是拒绝策略，拒绝策略都实现了RejectedExecutionHandler接口,这个接口里面有阵阵的拒绝策略（实现）。用的时候直接new 实现类。对标
+ * 就是拒绝策略，拒绝策略都实现了RejectedExecutionHandler接口,这个接口里面有真正的拒绝策略（实现）。用的时候直接new 实现类。对标
  * 下面的：
  *         redHeadDuck.SetFlyBehavoir(new FlyBehavior() {
  *             @Override

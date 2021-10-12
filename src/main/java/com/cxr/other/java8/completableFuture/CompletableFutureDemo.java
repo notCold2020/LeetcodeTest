@@ -18,7 +18,7 @@ public class CompletableFutureDemo {
         completableFutureAllOf();
     }
 
-    //无返回值
+    //无返回值,异步的但是会被get()阻塞
     public static void runAsync() throws Exception {
         CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
             try {
@@ -47,6 +47,9 @@ public class CompletableFutureDemo {
         System.out.println("返回值：" + res);
     }
 
+    /**
+     *  当用runAsync()的时候没办法对异常进行处理，所以有了exceptionally()
+     */
     public static void whenComplete() throws Exception {
         //直接在CompletableFuture内部捕获异常 是捕获不到的
         CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
@@ -54,23 +57,29 @@ public class CompletableFutureDemo {
                 TimeUnit.SECONDS.sleep(1);
                 if (new Random().nextInt() % 2 >= 0) {
                     int i = 12 / 0;
+                    System.out.println("异常捕获1");//如果抛出了异常这句不执行
                 }
             } catch (InterruptedException e) {
-                System.out.println("异常捕获");
+                System.out.println("异常捕获2");//如果抛出了异常这句不执行
             }
-            System.out.println("run end ...");
+            System.out.println("run end ...");//如果抛出了异常这句不执行
         });
+        System.out.println("主线程开始:"+Thread.currentThread().getName());
         /**
          * 当完成的时候会执行这个方法
          * 方法最下面TimeUnit.SECONDS.sleep(2) 是为了让主线程 晚点结束
          * 不然控制台都没了 这个"执行完成！"会打印到哪去呢
          *
-         * 注意：这个whenComplete也算在新开启的线程（必然是阻塞的啊）
+         * 注意：这个whenComplete也算在新开启的线程,即和exceptionally的线程也就是
+         * CompletableFuture 帮我们开启的线程
+         * 所以future.xxxx()的方法始终都是异步的，主线程该干嘛干嘛
          */
         future.whenComplete(new BiConsumer<Void, Throwable>() {
+            @SneakyThrows
             @Override
             public void accept(Void t, Throwable action) {
-                System.out.println("执行完成！");
+                TimeUnit.SECONDS.sleep(40);
+                System.out.println("执行完成！"+"线程："+Thread.currentThread().getName());
             }
         });
 
@@ -79,19 +88,22 @@ public class CompletableFutureDemo {
          * whenComplete依旧会执行 在exceptionally后
          */
         future.exceptionally(new Function<Throwable, Void>() {
+            @SneakyThrows
             @Override
             public Void apply(Throwable t) {
-                System.out.println("执行失败！" + t.getMessage());
+                System.out.println("执行失败！" + t.getMessage()+":线程:"+Thread.currentThread().getName());
+                TimeUnit.SECONDS.sleep(2);
                 return null;
             }
         });
 
-        TimeUnit.SECONDS.sleep(2);
-        System.out.println("主线程执行完成！");
+        TimeUnit.SECONDS.sleep(4);
+        System.out.println("主线程执行完成！:"+Thread.currentThread().getName());
     }
 
     /**
      * 当一个线程依赖另一个线程时，可以使用 thenApply 方法来把这两个线程串行化。
+     * 同样的，future执行的thenApply supplyAsync什么的都是新开了一个线程 是异步的 独立于主线程
      */
     private static void thenApply() throws Exception {
         CompletableFuture<Long> future = CompletableFuture.supplyAsync(new Supplier<Long>() {
@@ -106,14 +118,14 @@ public class CompletableFutureDemo {
             @Override
             public Long apply(Long t) {
                 long result = t * 5;
-                System.out.println("5*随机数result2=" + result);
                 TimeUnit.SECONDS.sleep(5);
+                System.out.println("5*随机数result2=" + result);
                 return result;
             }
         });
 
-        long result = future.get();//阻塞的获取
-        System.out.println("结果：result3" + result);
+//        long result = future.get();//阻塞的获取
+        System.out.println("结果：result3：" + "result");
     }
 
     /**
@@ -181,6 +193,7 @@ public class CompletableFutureDemo {
          * whenComplete 和 whenCompleteAsync 的区别：
          * whenComplete：是执行当前任务的线程执行继续执行 whenComplete 的任务。
          * whenCompleteAsync：是执行把 whenCompleteAsync 这个任务继续提交给线程池来进行执行。
+         * 反正都不是主线程
          */
         f1.whenCompleteAsync(new BiConsumer<String, Throwable>() {
             @SneakyThrows
@@ -222,7 +235,7 @@ public class CompletableFutureDemo {
 
         TimeUnit.SECONDS.sleep(1);
 
-        //一个需要耗时8秒，一个需要耗时15秒，只有当最长的耗时15秒的完成后，才会结束。
+        //一个需要耗时8秒，一个需要耗时15秒，只有当最长的耗时15秒的完成后，才会结束。因为是allof()，如果是anyof那就有一个结束就可以
         System.out.println("任务均已完成。");
 
     }

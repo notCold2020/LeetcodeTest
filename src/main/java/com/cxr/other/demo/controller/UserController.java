@@ -3,8 +3,7 @@ package com.cxr.other.demo.controller;
 import com.cxr.other.demo.dao.testInter;
 import com.cxr.other.demo.entriy.User;
 import com.cxr.other.demo.service.UserService;
-import com.cxr.other.point.AspectTest;
-import lombok.SneakyThrows;
+import com.cxr.other.spring.aspect.AspectTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -27,7 +27,7 @@ public class UserController implements ApplicationContextAware {
     private AspectTest aspectTest;
 
     @Autowired
-    private ApplicationContext applicationContext;
+    public static ApplicationContext applicationContext;
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -45,6 +45,7 @@ public class UserController implements ApplicationContextAware {
     private testInter testInter;
 
     @Autowired
+    @Transactional
     public void setTestInter(@Qualifier("testInterImpl1") com.cxr.other.demo.dao.testInter testInter) {
         testInter.testInter();
         this.testInter = testInter;
@@ -78,8 +79,9 @@ public class UserController implements ApplicationContextAware {
      * 2.别忘了在启动类开启@Enablexxxxxx(xxxx=true)
      */
     @RequestMapping("/test/respect")
-    private void aspectTest() {
-        aspectTest.beforeTest();
+    private String aspectTest() {
+        System.out.println("--");
+        return aspectTest.beforeTest();
     }
 
 

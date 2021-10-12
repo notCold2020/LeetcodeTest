@@ -1,14 +1,9 @@
 package com.cxr.other.schedules;
 
-import com.cxr.other.point.AspectTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
-import java.text.DateFormat;
-import java.util.Date;
 
 /**
  * https://www.pppet.net/changyong.html 在线

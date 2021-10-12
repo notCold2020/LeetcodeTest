@@ -31,6 +31,11 @@ public class OrderTransactionListener implements TransactionListener {
         return success ? LocalTransactionState.COMMIT_MESSAGE : LocalTransactionState.ROLLBACK_MESSAGE;
     }
 
+    /**
+     * LocalTransactionState.UNKNOW：未知，
+     * 如果返回这个状态，这个消息既不提交，也不回滚，还是保持prepared状态，而最终决定这个消息命运的
+     * 是checkLocalTransaction这个方法。
+     */
     @Override
     public LocalTransactionState checkLocalTransaction(MessageExt msg) {
         String orderId = msg.getKeys();

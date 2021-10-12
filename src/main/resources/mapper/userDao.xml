@@ -15,7 +15,7 @@
         select *
         from user
         where user_name = #{name,jdbcType=VARCHAR}
-          and pwd = #{pwd,jdbcType=VARCHAR}
+          and pwd = #{pwd,jdbcType=VARCHAR} limit 100,10
     </select>
 
     <select id="getUserByName" resultMap="User">
@@ -31,8 +31,8 @@
     </select>
 
     <insert id="insertUser" parameterType="com.cxr.other.demo.entriy.User">
-        insert into user (id, user_name, pwd)
-        values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{pwdddd,jdbcType=VARCHAR})
+        insert into user ( user_name, pwd)
+        values (#{userName,jdbcType=VARCHAR}, #{pwdddd,jdbcType=VARCHAR})
     </insert>
 
     <update id="updateUserByid">

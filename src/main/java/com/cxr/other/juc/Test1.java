@@ -8,9 +8,9 @@ class PrintABCBy30 implements Runnable {
         /**
          * 3个线程过来了 其实是没有顺序的 但不管哪个线程来了 我们的目的其实是
          * 让打印A B C
-         * A来了 打印出了A
-         * C来了 打印出了B
-         * C来了 打印出了C 。。。
+         * A线程来了 打印出了A
+         * C线程来了 此刻A还没执行count++ C阻塞
+         * A线程执行count++ C线程拿到锁 发现现在count是2 所以打印出B
          */
         synchronized ("abc") {
             while (count < 30) {

@@ -9,7 +9,7 @@ import java.util.logging.Handler;
  *
  * 1.框架里面哪里用到了？
  * Dubbo的拦截器，很多拦截器组成个责任链，只要有一个不通过就被拦截。
- * 而且容易若站
+ * 而且容易拓展
  */
 public class Test {
     public static void main(String[] args) {

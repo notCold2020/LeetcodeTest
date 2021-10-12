@@ -16,25 +16,27 @@ import java.util.List;
 public class OrderProducer {
 
     public static void main(String[] args) throws Exception {
-        //extends mqConfig
-        DefaultMQProducer producer = MqConfig.getProduct();
+        DefaultMQProducer product = MqConfig.getProduct();
+        pushNormal(product, "topicname", "tagA");
+        pushNormal(product, "topicname", "tagB");
+    }
 
+    public static void pushNormal(DefaultMQProducer producer, String topic, String tag) throws MQClientException, RemotingException, InterruptedException, MQBrokerException {
+        //extends mqConfig
         for (int x = 0; x < 30; x++) {
             Integer orderId = x;
-            Message message = new Message("topicname", "sync_tags", ("消息--" + orderId).getBytes());
+            Message message = new Message(topic, tag, ("消息--" + orderId).getBytes());
 
             SendResult sendResult = producer.send(message, (mqs, msg, arg) -> {
                 Integer id = (Integer) arg;//这一堆就是在配置messageQueue选择的规则
                 int index = id % mqs.size();
-                System.out.println("发送："+new String(message.getBody()));
-                return mqs.get(0);
+                System.out.println("发送：" + new String(message.getBody()));
+                return mqs.get(index);//每次都发到list中的第index个，有queueId的
             }, orderId);
 
             System.out.println("发送成功：sendResult: " + JSON.toJSONString(sendResult));
             System.out.println("=================================");
         }
-
-
     }
 
     public void pushAsync() throws MQClientException, RemotingException, InterruptedException, MQBrokerException {

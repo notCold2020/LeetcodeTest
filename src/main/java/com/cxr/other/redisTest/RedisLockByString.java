@@ -25,8 +25,14 @@ public class RedisLockByString {
     public String test() {
         //uuid是为了区分不同的客户端
         String uuid = UUID.randomUUID().toString();
-        /*false说明 已经被锁了
-            这个apple才是真正的锁 下面的stock是商品的库存
+        /**
+         * false说明 已经被锁了
+         * 这个apple才是真正的锁 下面的stock是商品的库存
+         *
+         * 下面这步就相当于acquireLock()尝试获取锁
+         * 如果是分布式锁 下面这个key应该是不变的 不同服务的请求过来要求都会被锁住，所以key应该对于不同的请求来说都是一样的
+         * 如果是幂等性 那么就要不同的服务请求过来都是不一样的key 因为幂等性只是保证一个服务的请求过来被锁住就行 其他的服务不能被锁，要是被
+         * 锁了那不和分布式锁一样了，而且幂等性就是对于一个服务来说的
          */
         Boolean apple = redisTemplate.opsForValue().setIfAbsent("apple", uuid, 30, TimeUnit.SECONDS);
         /**
