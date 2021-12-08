@@ -1,4 +1,4 @@
-package com.cxr.designpatterns.strategyMethod;
+package com.cxr.designpatterns.strategyMethod.normalStrategyMethod;
 
 public class SwingFlyBehavior implements  FlyBehavior {
     @Override

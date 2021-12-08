@@ -147,10 +147,12 @@ public class userDaoTest {
     private UserService userService2;
 
     @Test
-    void et(){
-        BeanFactoryPostProcessorTest tForBeanFactoryPostProcessor = (BeanFactoryPostProcessorTest)ApplicationUtils.getBean("beanFactoryPostProcessorTest");
+    void et() {
+        BeanFactoryPostProcessorTest tForBeanFactoryPostProcessor = (BeanFactoryPostProcessorTest) ApplicationUtils.getBean("beanFactoryPostProcessorTest");
         String name = tForBeanFactoryPostProcessor.getName();
         System.out.println(name);
     }
 
+
 }
+

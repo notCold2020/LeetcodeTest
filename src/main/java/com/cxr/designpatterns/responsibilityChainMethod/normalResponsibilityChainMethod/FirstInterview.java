@@ -1,6 +1,4 @@
-package com.cxr.designpatterns.responsibilityChainMethod;
-
-import java.util.HashSet;
+package com.cxr.designpatterns.responsibilityChainMethod.normalResponsibilityChainMethod;
 
 public class FirstInterview extends Handler {
 

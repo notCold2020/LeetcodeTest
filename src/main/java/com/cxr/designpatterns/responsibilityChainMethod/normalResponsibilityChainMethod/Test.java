@@ -1,6 +1,4 @@
-package com.cxr.designpatterns.responsibilityChainMethod;
-
-import java.util.logging.Handler;
+package com.cxr.designpatterns.responsibilityChainMethod.normalResponsibilityChainMethod;
 
 /**
  * 核心思想：
@@ -10,6 +8,10 @@ import java.util.logging.Handler;
  * 1.框架里面哪里用到了？
  * Dubbo的拦截器，很多拦截器组成个责任链，只要有一个不通过就被拦截。
  * 而且容易拓展
+ *
+ * 2.要素
+ *      1.抽象类handler 里面有处理请求的方法（抽象）
+ *      2.制定链的规则
  */
 public class Test {
     public static void main(String[] args) {

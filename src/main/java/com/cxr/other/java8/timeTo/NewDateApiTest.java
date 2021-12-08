@@ -244,7 +244,7 @@ class NewDateApiTest10 {
 
         LocalDateTime now2 = LocalDateTime.now();
         System.out.println("格式化前:" + now2);
-        String format2 = now2.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
+        String format2 = now2.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         System.out.println("格式化后:" + format2);
 //        String util = util(5);
 //        System.out.println(util);

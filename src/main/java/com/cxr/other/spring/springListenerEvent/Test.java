@@ -2,7 +2,10 @@ package com.cxr.other.spring.springListenerEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 @Component
 public class Test {
@@ -14,6 +17,9 @@ public class Test {
     @Autowired
     private  ApplicationContext applicationContext;
 
+    @Resource
+    private ApplicationEventPublisher applicationEventPublisher;
+
     public void testEvent() throws InterruptedException {
         /**
          * 同步事件:广播事件，然后被打了@EventListener(OrderSuccessEvent.class)的方法捕获到，开始执行这个方法（比如耗时3s）,
@@ -23,7 +29,8 @@ public class Test {
          * 3s咱们也不用等了。
          * 或者最简单粗暴就是个new Thread().start()也行
          */
-        applicationContext.publishEvent(new OrderSuccessEvent(this));//this是事件源，
+//        applicationContext.publishEvent(new OrderSuccessEvent(this));//this是事件源，
+        applicationEventPublisher.publishEvent(new EventDTO());
     }
 
 }

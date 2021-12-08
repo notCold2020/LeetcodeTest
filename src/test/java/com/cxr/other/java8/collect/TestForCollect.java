@@ -154,7 +154,6 @@ class TestForCollect {
     @Test
     void test06() {
         List<Person> personList = new ArrayList<Person>();
-
         personList.add(new Person("Sherry", 9000, 24, "female", "New York"));
         personList.add(new Person("Tom", 8900, 22, "male", "Washington"));
         personList.add(new Person("Jack", 9000, 25, "male", "Washington"));
@@ -178,6 +177,10 @@ class TestForCollect {
         // 先按工资再按年龄自定义排序（降序）
         List<String> newList4 = personList.stream().sorted((p1, p2) -> {
             if (p1.getSalary() == p2.getSalary()) {
+                /**
+                 * 这样子排序可能溢出哦
+                 * 不要直接使用 o1-o2会溢出，推荐使用 Integer.compare(o1, o2);
+                 */
                 return p2.getAge() - p1.getAge();
             } else {
                 return p2.getSalary() - p1.getSalary();

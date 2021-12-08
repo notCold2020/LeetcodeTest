@@ -20,6 +20,7 @@ class ThreadPoolExecutorSelf {
     private BlockingQueue<MyTask> blockingQueue;
 
     //是否关闭线程池，用 volatile 保证可见性，确保线程可以及时关闭
+    //这种多线程之间共享的 都需要用volatile修饰
     private volatile boolean shutdown = false;
 
     /**

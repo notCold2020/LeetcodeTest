@@ -37,7 +37,7 @@ class ThreadPoolMethod {
         final List<Integer> list = new ArrayList<>();
         final Random random = new Random();
         ExecutorService executorService = Executors.newSingleThreadExecutor();
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 2000; i++) {
             Future<String> submit = executorService.submit(() -> {
                 list.add(random.nextInt());
                 Thread.sleep(2);
@@ -54,15 +54,19 @@ class ThreadPoolMethod {
          * 2.或者等超时时间到
          * 3.或者线程被中断，抛出InterruptedException
          *
-         * 说白了这不就是个保险吗 设置的时间过了 我们可以看看线程池里面的任务结束没，要是结束了就皆大欢喜，没结束就手动结束或者怎么样想想办法。
+         * 说白了这不就是个保险吗 设置的时间过了 我们可以看看线程池里面的任务结束没，要是结束了就皆大欢喜，没结束就手动结束或者怎么样想想办法（awaitTermination方法并不会结束线程池）
          *
          * awaitTermination:(放在shutdown()之后  不然必然是返回false)
          * 判断线程池中的线程是否在规定时间内执行完/timeout时间后线程池是否被关闭  返回个boolean
          */
-        boolean b = executorService.awaitTermination(500, TimeUnit.SECONDS);
+        boolean b = executorService.awaitTermination(1, TimeUnit.SECONDS);
         System.out.println(b);
         System.out.println(System.currentTimeMillis() - start);
         System.out.println("size:" + list.size());
+        Thread.sleep(1000L);
+
+        boolean b2 = executorService.awaitTermination(1, TimeUnit.SECONDS);
+        System.out.println(b2);
         System.out.println("线程池已经关闭");
 
     }
@@ -85,8 +89,8 @@ class ThreadPoolMethod2 {
                 }
                 System.out.println(Thread.currentThread().getName() + ":" + finalI);
             });
-            System.out.println("-----");
         }
+        System.out.println("-----");
     }
 
 }

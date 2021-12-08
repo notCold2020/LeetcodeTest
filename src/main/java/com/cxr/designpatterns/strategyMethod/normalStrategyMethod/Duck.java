@@ -1,4 +1,4 @@
-package com.cxr.designpatterns.strategyMethod;
+package com.cxr.designpatterns.strategyMethod.normalStrategyMethod;
 
 //抽象类：鸭子
 public abstract class Duck {

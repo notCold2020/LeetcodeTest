@@ -1,9 +1,8 @@
 package com.cxr.other.spring.singlePrototypeDemo;
 
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Scope;
 
-@Scope("prototype")
+//@Scope("prototype")
 @ComponentScan
 public class UserDao {
 

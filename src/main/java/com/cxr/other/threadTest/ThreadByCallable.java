@@ -14,7 +14,7 @@ public class ThreadByCallable {
         new Thread(futureTask).start();
         //获取返回值
         futureTask.get().stream().forEach(System.out::println);
-
+        System.out.println("获取了返回值");
     }
 
 }
@@ -26,6 +26,7 @@ class CallableDemo implements Callable<List<Integer>> {
     public List<Integer> call() throws Exception {
         for (int i = 0; i < 10; i++) {
             list.add(i);
+            Thread.sleep(1000L);
         }
         return list;
     }

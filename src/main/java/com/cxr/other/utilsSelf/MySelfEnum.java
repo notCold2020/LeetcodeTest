@@ -1,7 +1,6 @@
 package com.cxr.other.utilsSelf;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +40,6 @@ public enum MySelfEnum {
         if (code == null) {
             return null;
         }
-        MySelfEnum[] values = MySelfEnum.values();
         for (MySelfEnum value : MySelfEnum.values()) {
             if (Objects.equals(value.getCode(), code)) {
                 return value.getDesc();

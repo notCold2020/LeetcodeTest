@@ -20,6 +20,7 @@ import java.util.Map;
 
 @RestController
 public class UserController implements ApplicationContextAware {
+
     @Autowired
     private UserService userService;
 
@@ -78,11 +79,14 @@ public class UserController implements ApplicationContextAware {
      * 1.AOP都是代理帮我们实现的，所以aspectTest这个东西得是代理才行
      * 2.别忘了在启动类开启@Enablexxxxxx(xxxx=true)
      */
+    int i = 0;
     @RequestMapping("/test/respect")
     private String aspectTest() {
         System.out.println("--");
-        return aspectTest.beforeTest();
+//        return aspectTest.beforeTest();
+        return String.valueOf(i++);
     }
+
 
 
 }

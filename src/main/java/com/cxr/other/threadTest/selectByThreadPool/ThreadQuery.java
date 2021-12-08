@@ -1,7 +1,7 @@
 package com.cxr.other.threadTest.selectByThreadPool;
 
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -15,7 +15,8 @@ public class ThreadQuery implements Callable<List<String>> {
 
     private String table;//要查询的表名，也可以写死，也可以从前面传
 
-    private List<String> page = new LinkedList();//每次分页查出来的数据
+    //每次每个线程分页查出来的数据
+    private List<String> page = new ArrayList<>();
 
     public ThreadQuery(int bindex, int num, String table) throws InterruptedException {
         this.bindex = bindex;
@@ -24,11 +25,11 @@ public class ThreadQuery implements Callable<List<String>> {
     }
 
     @Override
-    public List call() throws Exception {
-        //返回数据给Future
-        Thread.sleep(10000L);
-//        page=sqlHadle.queryTest11(bindex,num,table);       模拟分页查询数据库数据
-        page.add("结果"+bindex);
+    public List<String> call() throws Exception {
+        Thread.sleep(3000L);
+        //模拟分页查询数据库数据
+        String res = Thread.currentThread().getName() + "从数据库中查询了第" + bindex + "页的" + num + "条数据,当前的数据是" + (bindex - 1) * (num) + "条~" + bindex * (num) + "条";
+        page.add("结果::" + res);
         return page;
     }
 }

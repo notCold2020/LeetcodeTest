@@ -80,16 +80,17 @@ class TestDemoTest {
      */
     @Test
     void test01() {
-        List<Integer> list = Arrays.asList(7, 6, 9, 3, 8, 2, 1);
+        List<Integer> list = Arrays.asList(88, 7, 6, 9, 3, 8, 2, 1);
         // 遍历输出符合条件的元素
         list.stream().filter(x -> x > 6).forEach(System.out::println);
-        // 匹配第一个
+        // 匹配第一个 就是88 list中的第一个元素 get(0)
         Optional<Integer> findFirst = list.stream().findFirst();
         // 任意匹配一个 每次都是一样的 类似于伪随机数
         Optional<Integer> findAny = list.stream().findAny();
         // 是否包含符合特定条件的元素
         boolean anyMatch = list.stream().anyMatch(x -> x < 6);
         boolean noneMatch = list.stream().noneMatch(x -> x < 6);
+        // findFirst这个比如说要找年龄最小的，那么就按照年龄先排序，然后findFirst即可
         System.out.println("匹配第一个值：" + findFirst.get());
         System.out.println("匹配任意一个值：" + findAny.get());
         System.out.println("是否存在大于6的值：" + anyMatch);
@@ -187,12 +188,14 @@ class TestDemoTest {
     @Test
     void Test04() {
         /**
-         * 1.map:接收一个函数作为参数，把这个函数作用到每个元素上
-         * 2.flatMap:也是接收一个函数作为参数 将流中的每个值都换成另一个流
+         * 1.map:对集合中的每一项进行 操作
+         * 2.flatMap:对集合中的每一项进行 操作，然后把每一项都变成个流。然后把这些流加起来组合成一个新的流。
+         * 这里说的加起来，就是单纯的相加，相当于摊平了
+         *
          * 然后把所有的流连接成一个新的流 有点类似于parallelStream并行流
          * 比如：现在有两箱鸡蛋 要变成煎蛋
-         * map做的事情是把两箱鸡蛋变成煎蛋 依旧还在两个箱子里面
-         * flatMap做的事情是变成煎蛋 然后放到一起
+         * map做的事情是把两箱鸡蛋变成煎蛋 依旧还在两个箱子里面                 List<List<鸡蛋>> -> List<List<煎蛋>>
+         * flatMap做的事情是两箱鸡蛋变成了两箱煎蛋 然后把两箱煎蛋变成一箱        List<List<鸡蛋>> -> List<煎蛋>
          *
          */
         String[] strArr = {"abcd", "bcdd", "defde", "fTr"};
@@ -241,17 +244,16 @@ class TestDemoTest {
             }
         });
 
-        //
+        List<List<String>> res1 = new ArrayList<>();
+        res1.add(Arrays.asList("1"));
+        res1.add(Arrays.asList("2"));
+        res1.add(Arrays.asList("3"));
+        res1.add(Arrays.asList("4"));
+        //就是 1，2，3，4的集合
+        List<String> lists = res1.stream().flatMap(Collection::stream).collect(Collectors.toList());
+
         Stream<String> stringStream = list.stream().flatMap(s -> {
             String[] split = s.split(",");
-
-            for (String s1 : split) {
-                System.out.print("我是split:" + s1);
-                System.out.println("---");
-            }
-            System.out.println("++");
-            // 将每个元素转换成一个stream 想把两个数组拼装起来 肯定是需要用流来拼装的 所以才有了下面这一行的代码
-            //个人理解：只要用了faltMap 就得需要变成流然后拼起来 不然就编译时异常
             Stream<String> s2 = Arrays.stream(split);
             return s2;
         });

@@ -1,16 +1,13 @@
 package com.cxr.other.utilsSelf;
 
 
-import cn.hutool.core.convert.Convert;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.util.Map;
 
 
 class RWToTxt {
@@ -25,7 +22,7 @@ class RWToTxt {
                 StringBuilder stringBuilder = new StringBuilder("http://user.m.163.com/api/dsf/user/createUser?productId=1&ibc=newsapp&token=123&passport=");
                 String majia = reader.readLine().split(",")[0];
                 stringBuilder.append(majia);
-                String body = HttpRequest.post(stringBuilder.toString()).body(new JSONObject()).execute().body();
+                String body = HttpRequest.post(stringBuilder.toString()).body(String.valueOf(new JSONObject())).execute().body();
             }else{
                 System.out.println("执行结束");
                 break;

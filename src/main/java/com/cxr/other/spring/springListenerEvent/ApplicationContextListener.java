@@ -29,9 +29,13 @@ public class ApplicationContextListener  implements ApplicationListener<ContextR
     /**
      * ContextRefreshedEvent会在IOC容器初始化结束后广播一个事件，这个时候
      * IOC容器初始化完毕,必然是在setApplicationContext()之后的
+     *
+     * 广播contextRefreshedEvent事件会触发下面的onApplicationEvent接口
      */
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        //这样也可以拿到ApplicationContext
+        ApplicationContext applicationContext = contextRefreshedEvent.getApplicationContext();
         System.out.println("--contextRefreshedEvent--");
     }
 }

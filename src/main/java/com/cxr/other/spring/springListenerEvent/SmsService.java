@@ -26,4 +26,33 @@ public class SmsService {
         System.out.println("监听到了事件，即将发送短信...");
     }
 
+    /**
+     * 如果不指定 可以直接通过这个参数来找到对应的listener
+     * 当然下面的方式也可以
+     */
+    @EventListener(EventDTO.class)
+    public void eventDTOTest() {
+
+        try {
+            Thread.sleep(1000L * 5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("监听到了事件，即将发送短信...");
+    }
+
+    @EventListener
+    public void eventDTOTest(EventDTO eventDTO) {
+
+        try {
+            Thread.sleep(1000L * 5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("监听到了事件，即将发送短信...");
+    }
+
+
 }

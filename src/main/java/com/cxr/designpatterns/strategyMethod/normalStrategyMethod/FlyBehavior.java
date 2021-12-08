@@ -1,4 +1,4 @@
-package com.cxr.designpatterns.strategyMethod;
+package com.cxr.designpatterns.strategyMethod.normalStrategyMethod;
 
 /**
  * 单独抽取出来的 变化的方法

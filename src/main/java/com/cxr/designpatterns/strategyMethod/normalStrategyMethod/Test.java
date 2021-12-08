@@ -1,4 +1,4 @@
-package com.cxr.designpatterns.strategyMethod;
+package com.cxr.designpatterns.strategyMethod.normalStrategyMethod;
 
 /**
  * 主类：模拟鸭子

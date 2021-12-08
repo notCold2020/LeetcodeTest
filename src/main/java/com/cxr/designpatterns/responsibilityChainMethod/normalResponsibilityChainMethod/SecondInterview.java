@@ -1,4 +1,4 @@
-package com.cxr.designpatterns.responsibilityChainMethod;
+package com.cxr.designpatterns.responsibilityChainMethod.normalResponsibilityChainMethod;
 
 public class SecondInterview extends Handler {
     @Override

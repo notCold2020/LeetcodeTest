@@ -9,7 +9,7 @@ import javax.annotation.Resource;
  * @Author: CiXingrui
  * @Create: 2021/9/15 4:18 下午
  */
-@Service
+@Service("UserServiceLazy")
 public class UserService {
 
     /**

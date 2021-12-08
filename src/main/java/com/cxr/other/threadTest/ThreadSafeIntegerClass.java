@@ -19,7 +19,7 @@ public class ThreadSafeIntegerClass {
                     (ThreadSafeIntegerClass.class.getDeclaredField("value"));
         } catch (Exception ex) { throw new Error(ex); }
     }
-
+    //注意value用volatile修饰
     private volatile int value;
     public final int getAndSet(int newValue) {
         return unsafe.getAndSetInt(this, valueOffset, newValue);

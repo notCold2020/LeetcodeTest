@@ -1,4 +1,4 @@
-package com.cxr.designpatterns.strategyMethod;
+package com.cxr.designpatterns.strategyMethod.normalStrategyMethod;
 
 /**
  * 红头鸭：继承基类Duck

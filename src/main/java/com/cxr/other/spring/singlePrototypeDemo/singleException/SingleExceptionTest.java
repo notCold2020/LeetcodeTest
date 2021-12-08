@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class SingleExceptionTest {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(UserDao.class);
 
@@ -21,11 +21,15 @@ public class SingleExceptionTest {
          * 这种多线程环境操作单例模式的全局变量，就会有问题。
          * https://xiejun.blog.csdn.net/article/details/105738223
          */
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1000; i++) {
             new Thread(() -> {
                 SingleExceptionDemo bean = applicationContext.getBean(SingleExceptionDemo.class);
                 bean.test();
             }).start();
         }
+        Thread.sleep(3000L);
+        SingleExceptionDemo bean = applicationContext.getBean(SingleExceptionDemo.class);
+        int i1 = bean.getI();
+        System.out.println(i1+"--");
     }
 }
