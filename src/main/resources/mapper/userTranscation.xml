@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cxr.other.spring.transaction.UserMapper">
+
+
+
+
+    <insert id="insert" parameterType="com.cxr.other.spring.transaction.UserTransaction">
+        insert into t_transacation(user_name, guid, account)
+        values (#{user.userName,jdbcType=VARCHAR},
+                #{user.guid,jdbcType=INTEGER},
+                #{user.account,jdbcType=INTEGER})
+    </insert>
+
+    <insert id="insertUserInfo">
+        insert into t_user_info_demo
+                (guid, user_name, age, account, email, create_time, city)
+        values (#{user.guid}, #{user.userName}, #{user.age}, #{user.account}, #{user.email}, #{user.createTime},
+                #{user.city})
+    </insert>
+</mapper>
