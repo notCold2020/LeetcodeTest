@@ -7,17 +7,17 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@NoArgsConstructor
 @Builder
 @Data
-public class User implements Serializable, Cloneable {
-    private  Integer id;
+public class User implements Serializable, Cloneable ,Comparable , Comparator {
+    private Integer id;
     private String userName;
     private String pwdddd;
     @Singular
@@ -43,5 +43,18 @@ public class User implements Serializable, Cloneable {
 
     }
 
+    @Override
+    public int compareTo(Object o) {
+        return 1;
+    }
+
+    public User() {
+        System.out.println("构造方法user");
+    }
+
+    @Override
+    public int compare(Object o1, Object o2) {
+        return 0;
+    }
 }
 

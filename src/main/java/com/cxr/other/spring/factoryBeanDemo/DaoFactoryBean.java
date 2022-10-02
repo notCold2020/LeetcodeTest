@@ -1,9 +1,14 @@
 package com.cxr.other.spring.factoryBeanDemo;
 
 import org.springframework.beans.factory.FactoryBean;
+import org.springframework.stereotype.Component;
 
-//@Component("daoFactoryBean")
-//daoFactoryBean：得到是当前产生的对象，&daoFactoryBean：得到的是当前对象
+
+/**
+ * daoFactoryBean：得到是当前产生的对象
+ * &daoFactoryBean：得到的是当前对象
+ */
+@Component("daoFactoryBean")
 public class DaoFactoryBean implements FactoryBean<TempFactoryBean> {
     /*
      * 实现了factoryBean接口

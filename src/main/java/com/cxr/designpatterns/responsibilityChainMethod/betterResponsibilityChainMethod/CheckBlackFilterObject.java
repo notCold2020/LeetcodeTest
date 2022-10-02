@@ -1,10 +1,9 @@
 package com.cxr.designpatterns.responsibilityChainMethod.betterResponsibilityChainMethod;
 
-import org.omg.CORBA.Request;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import javax.xml.ws.Response;
+import java.util.List;
 
 /**
  *  黑名单校验对象
@@ -14,8 +13,9 @@ import javax.xml.ws.Response;
 public class CheckBlackFilterObject extends AbstractHandler {
 
     @Override
-    public void doFilter(Request request, Response response) {
+    public void doFilter(List<String> request, List<String> response) {
         //invoke black list check
         System.out.println("校验黑名单");
+        response.add("校验黑名单");
     }
 }

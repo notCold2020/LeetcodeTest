@@ -152,5 +152,33 @@ class CompletableFutureDemoTest {
         Assertions.assertEquals(future4.join(), 8);//因为有返回值 所以再thenApply里面可以操作 * 2
         System.out.println("------OK-------");
     }
+
+    /**
+     * 如果A方法是异步的执行5s，但是有异常了，那么exceptionally还能捕获吗？
+     * 可以的，项目又没挂。
+     * 虽然方法结束了但是项目还在，exceptionally部分也是异步的，
+     */
+    @Test
+    void test5() throws InterruptedException {
+        System.out.println("test5开始执行");
+        CompletableFuture.runAsync(()->{
+            try {
+                Thread.sleep(5000L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            int i = 1/0;
+        }).exceptionally(new Function<Throwable, Void>() {
+            @SneakyThrows
+            @Override
+            public Void apply(Throwable t) {
+                System.out.println("执行失败！" + t.getMessage());
+                return null;
+            }
+        });
+        System.out.println("test5执行结束");
+
+        Thread.sleep(50000L);
+    }
 }
 

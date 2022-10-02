@@ -2,16 +2,17 @@ package com.cxr.other.spring.beanLifeCycle;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.annotation.Resource;
+
 public class MyLifeCyc implements BeanNameAware, BeanFactoryAware, InitializingBean, DisposableBean {
 
     private dd dd;
 
-    @Autowired
+    @Resource
     public void setDd(com.cxr.other.spring.beanLifeCycle.dd dd) {
         System.out.println("2:"+this.getClass().getSimpleName() + "依赖注入");
         this.dd = dd;

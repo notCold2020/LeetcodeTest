@@ -37,7 +37,7 @@ public class RedisLockByString {
         Boolean apple = redisTemplate.opsForValue().setIfAbsent("apple", uuid, 30, TimeUnit.SECONDS);
         /**
          * 过期时间是为了防止锁超时 比如A挂了,
-         * 锁过期的时间要小于程序的执行时间
+         * 锁过期的时间要大于程序的执行时间
          * UUID是为了防止释放锁 释放错了
          */
         try {

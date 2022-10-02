@@ -1,11 +1,13 @@
 package com.cxr.other.spring.aspect;
 
-import com.cxr.other.demo.controller.UserController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Component
+@Service
+@RestController
 public class AspectTest{
     /**
      * 这个实际上是代理对象来进行操作 所以如果我们想实现一个请求 如果请求中携带某个参数 我们就让这个请求return掉 before()方法是不行的
@@ -17,11 +19,9 @@ public class AspectTest{
      */
     static Logger logger = LoggerFactory.getLogger(AspectTest.class);
 
-    /**
-     * @see UserController#aspectTest()
-     */
-    public String beforeTest() {
-        System.out.println("--");
+    @GetMapping("/beforeTest")
+    private String beforeTest() {
+        System.out.println("被切的方法");
         return "123";
     }
 }

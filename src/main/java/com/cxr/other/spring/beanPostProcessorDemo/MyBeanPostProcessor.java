@@ -11,7 +11,7 @@ import java.lang.reflect.Proxy;
 
 /**
  * 这个玩意得交给spring来管理，不交给spring管理Spring怎么调用你呢？
- *
+ * <p>
  * 并且是BeanPostProcessor里面的这个两个方法是在IOC容器初始化的过程中完事的
  * 所以我们重写了BeanPostProcessor之后 再去IOC容器中拿bean会拿到我们增强过的bean
  */
@@ -25,10 +25,12 @@ public class MyBeanPostProcessor implements BeanPostProcessor, InitializingBean 
             System.out.println("bean 对象初始化之前······");//注意是初始化
         }
         return bean;
-        // return bean对象监控代理对象
     }
 
     @Override
+    /**
+     * bean初始化之后执行
+     */
     public Object postProcessAfterInitialization(final Object beanInstance, String beanName) throws BeansException {
         // 为当前 bean 对象注册监控代理对象，负责增强 bean 对象方法的能力
         Class beanClass = beanInstance.getClass();

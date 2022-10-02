@@ -7,10 +7,6 @@ import org.springframework.stereotype.Component;
 @ComponentScan(value = "com.cxr.other.spring.beanPostProcessorDemo")
 public class BaseServiceImpl implements BaseService {
 
-    public BaseServiceImpl() {
-        System.out.println("---BaseServiceImpl实例化---");
-
-    }
 
     public String doSomething() {
         return "Hello AlanShelby"; // 增强效果：返回内容全部大写

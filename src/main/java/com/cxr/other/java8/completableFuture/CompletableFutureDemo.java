@@ -342,6 +342,7 @@ public class CompletableFutureDemo {
                 dbMethod(list);
             });
         }
+
     }
 
     @SneakyThrows

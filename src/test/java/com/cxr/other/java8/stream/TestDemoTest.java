@@ -202,8 +202,28 @@ class TestDemoTest {
         List<String> collect = Arrays.stream(strArr).map(String::toUpperCase).collect(Collectors.toList());
         List<String> collect1 = Arrays.stream(strArr).map(x -> x + 3).collect(Collectors.toList());
 
+        /**
+         * 这样写是失效的，如果List<User>.stream().peek(m->m.setName("xxx"));这样的可以的
+         * 只有是对象才可以
+         *
+         * 基本类型，- 值传递，就算更改也不改变原有值。
+         * 对象是引用传递
+         * String也是引用传递，但是string是不可变的，就会重新创建一个对象，不改变原有值，看起来也像值传递。
+         */
+        List<String> collect22 = Arrays.stream(strArr).peek( x ->{
+            /**
+             * String x = "123"  -> String x = new String("123");
+             * 传递进来的x是个引用 想修改为456，也就是让引用x指向新开辟的456
+             * 但是不行，x不可变
+             * 就又创建了 String x = new String("456");
+             * 我们collect的是strArr，peek里面的改动影响不到strArr
+             */
+            x = "456";
+        }).collect(Collectors.toList());
+
         System.out.println("每个元素大写：" + collect);
         System.out.println("每个元素+3：" + collect1);
+        System.out.println("每个元素置空：" + collect22);//这个是失效的，
 
         /**----------------------------------------------------------------------------------------------------------------------------------------------------**/
         //把员工的薪资全都 + 1000
@@ -252,6 +272,11 @@ class TestDemoTest {
         //就是 1，2，3，4的集合
         List<String> lists = res1.stream().flatMap(Collection::stream).collect(Collectors.toList());
 
+        /**
+         * flatMap里面要的是stream
+         * flatMap可以把多个stream合并成一个 所以{}里面要的是流
+         *
+         */
         Stream<String> stringStream = list.stream().flatMap(s -> {
             String[] split = s.split(",");
             Stream<String> s2 = Arrays.stream(split);
@@ -380,5 +405,29 @@ class TestDemoTest {
         // 判断是否所有元素长度大于五
         boolean result1 = list.stream().allMatch(obj -> obj.length() > 5);
         boolean result2 = list.stream().anyMatch(obj -> obj.length() > 5);
+    }
+
+    @Test
+    void Test06() {
+        @Data
+        @AllArgsConstructor
+        @NoArgsConstructor
+        class Person {
+            String i;
+            Integer age;
+            String addr;
+            double l;
+        }
+        List<Person> personList = Lists.newArrayList(
+                new Person("i", 18, "杭州", 999.9),
+                new Person("am", 19, "温州", 777.7),
+                new Person("iron", 21, "杭州", 888.8),
+                new Person("iron", 17, "宁波", 888.8)
+        );
+        /**
+         * 指定key-value，value是对象本身，Function.identity()是简洁写法，也是返回对象本身，key 冲突的解决办法，这里选择第二个key覆盖第一个key。
+         */
+        Map<Integer, Person> collect = personList.stream().
+                collect(Collectors.toMap(Person::getAge, Person -> Person, (key1, key2) -> key2));
     }
 }

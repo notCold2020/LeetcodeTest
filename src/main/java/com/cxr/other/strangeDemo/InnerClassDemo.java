@@ -84,6 +84,8 @@ public class InnerClassDemo {
      *
      * 因为TypeReference的构造方法是protect的，别人不能随意的new它。
      * 所以只能搞一个匿名内部类去继承TypeReference（TypeReference本身是public的）
+     *
+     * 就是明确指定反序列化类型的
      */
     void test4() {
         List<String> list = Arrays.asList("张三 ", "李四", "王五 ");

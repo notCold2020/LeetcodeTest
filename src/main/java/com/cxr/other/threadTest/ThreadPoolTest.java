@@ -76,14 +76,20 @@ class ThreadPoolMethod2 {
     public static void main(String[] args) {
         ExecutorService executorService1 = Executors.newSingleThreadExecutor();
         ExecutorService executorService2 = Executors.newFixedThreadPool(10);//10个可复用的线程
+//        executorService2 = new ThreadPoolExecutor(10, 10,
+//                0L, TimeUnit.MILLISECONDS,
+//                new LinkedBlockingQueue<Runnable>(),new BasicThreadFactory.Builder().namingPattern("ScheduleFuture-Thread-%d")
+//                .daemon(true) // 这里需要设置成守护线程
+//                .build());
+
         ExecutorService executorService3 = Executors.newCachedThreadPool();
         ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(2);
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             int finalI = i;
-            executorService3.execute(() -> {
+            executorService2.execute(() -> {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(1000L);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

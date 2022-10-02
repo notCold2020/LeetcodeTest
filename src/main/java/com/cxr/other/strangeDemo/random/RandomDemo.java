@@ -8,6 +8,9 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * @Author: CiXingrui
  * @Create: 2021/11/12 10:54 上午
+ *
+ * 结论：ThreadLocalRandom不能作为全局变量(不能作为多个线程共享的变量，比如私有变量但是有异步方法也不行)
+ * 正确使用方式是每一次都ThreadLocalRandom.current().nextInt(xxx)
  */
 public class RandomDemo {
     public static void main(String[] args) {
@@ -32,16 +35,18 @@ public class RandomDemo {
             /**
              * 现象：线程池的方式如果是一个线程 打印出来的随机数都是一样的 比如循环10次 打印出来1234...10 那么再次循环也是1234...10
              * 原因：主线程通过current()方法生成个种子，子线程通过nextInt()方法用种子生成一个随机数，并且把自己子线程的种子修改了
-             * 第二次再循环，就用改过的种子再执行一次上面的操作（每次循环都是同一个线程，在子线程自己的栈帧里面操作，自然每次都更新了种子）
+             * 第二次再循环，就用改过的种子再执行一次上面的操作（每次循环都是同一个线程，在子线程自己的栈帧里面操作，自然每次都更新了种子,就是用旧种子生成的新种子）
              */
-            service.submit(() -> {
-                System.out.println(Thread.currentThread().getName() + ":" + threadLocalRandom.nextInt(10));
-            });
+//            service.submit(() -> {
+//                System.out.println(Thread.currentThread().getName() + ":" + threadLocalRandom.nextInt(10));
+//            });
 
             /**
              * 现象：这10个线程打印出来的随机数都是一样的
-             * 原因：主线程生成种子，子线程用主线程的种子生成(自己的)随机数。第二次又new了一个线程，又用的主线程的种子（因为子线程是
-             * new出来的，可以简单理解）所以随机数都是一样的
+             * 原因：主线程生成种子，子线程用主线程的种子生成(自己的)随机数(在子线程的工作内存中)。
+             * 第二次又new了一个线程(也可以理解为第二次请求)，但是还用的主线程的种子（因为子线程是主线程
+             * new出来的，可以简单理解）所以随机数都是一样的。
+             *
              */
             new Thread(()->{
                 System.out.println(Thread.currentThread().getName() + ":" + threadLocalRandom.nextInt(10));
@@ -73,6 +78,11 @@ public class RandomDemo {
         random.nextInt(10);
     }
 
+    /**
+     * 原理：
+     * 第一步：用调用ThreadLocalRandom.current();的线程为基础生成个种子，
+     * 第二步：第二次再用第一步的种子为基础再生成一个种子
+     */
     private static void testThreadLocalRandom() {
         ThreadLocalRandom random = ThreadLocalRandom.current();
         // 生成 0-9 的随机数(点进来)

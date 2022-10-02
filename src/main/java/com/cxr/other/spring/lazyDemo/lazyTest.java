@@ -24,8 +24,20 @@ public class lazyTest {
          *
          * 4.所以懒加载解决循环依赖的原因的确是让beanA和代理B依赖
          *
+         * 5.如果类A上是普通的@service 但是在B类中注入A并且在A字段上标记@Lazy，那么ioc容器中还是会有A，但是B类中的A是Cglib代理过的代理对象
+         *
+         * 6.如果一个类上有@Component @Lazy，并且没有其他的类哟；依赖注入它/虽然依赖注入但是有@Lazy，那么这个类就不会被放进ioc容器，而是在
+         * getBean()的时候才实例化这个bean，这里说的getBean是源码中的doGetBean()，其实applicationContext.getBean()最终也调用的是doGetBean()
+         *
+         *
+         * 7.如果@lazy在全局变量上，那么是在依赖注入的时候判断，是不是注入进去一个代理对象
+         * @see org.springframework.beans.factory.support.DefaultListableBeanFactory#resolveDependency(org.springframework.beans.factory.config.DependencyDescriptor, java.lang.String, java.util.Set, org.springframework.beans.TypeConverter)
+         *
+         * 8.如果@lazy在类上，就先不加载，跳过，没找到具体在哪，可能是加载配置类的部分？？
+         *
          * https://xiejun.blog.csdn.net/article/details/103267125
          */
         UserService bean = applicationContext.getBean(UserService.class);
+        UserDao bean2 = applicationContext.getBean(UserDao.class);
     }
 }

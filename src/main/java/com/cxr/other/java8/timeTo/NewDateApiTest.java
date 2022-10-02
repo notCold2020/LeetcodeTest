@@ -1,14 +1,10 @@
 package com.cxr.other.java8.timeTo;
 
-import com.alibaba.fastjson.JSONObject;
-
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
-import java.util.LinkedList;
 
 public class NewDateApiTest {
     public static void main(String[] args) {
@@ -46,6 +42,10 @@ class NewDateApiTest2 {
         // 获取时间参数的年、月、日（有时需求要用到）
         System.out.println("获取时间参数的年、月、日：");
         LocalDateTime param = LocalDateTime.now();
+
+        //一键转换localDate
+        LocalDate localDate = param.toLocalDate();
+
         System.out.println("year:" + param.getYear());
         System.out.println("month:" + param.getMonth());
         System.out.println("monthValue:" + param.getMonthValue());//月的值 int  12月
@@ -210,7 +210,7 @@ class NewDateApiTest8 {
 /**
  * 转换成秒
  */
- class NewDateApiTest9 {
+class NewDateApiTest9 {
     public static void main(String[] args) {
         Date date = new Date();
         System.out.println(date.getTime() / 1000);
@@ -251,73 +251,19 @@ class NewDateApiTest10 {
     }
 
     /**
-     * [
-     *    {"month":"202010","startTime":"2020-10-26","endTime":"2020-10-31"},
-     *    {"month":"202011","startTime":"2020-11-01","endTime":"2020-11-30"},
-     *    {"month":"202012","startTime":"2020-12-01","endTime":"2020-12-10"}
-     * ]
-     * @param days  需小于60  返回距今days天前的每个月的起止日期
-     * @return  JSON格式字符串
+     * 时间戳转字符串
      */
-    public static String getJsonAfterDays(Integer days) {
-        LocalDate endDate = LocalDate.now();
-        LocalDate startDate = endDate.minus(days, ChronoUnit.DAYS);//初始时间
-
-        //判断初始时间和结束时间垮了几个月
-        LocalDate firstDay = startDate.with(TemporalAdjusters.firstDayOfMonth());//初始时间的第一天
-        LocalDate endDay = endDate.with(TemporalAdjusters.firstDayOfMonth());//结束时间的第一天
-        if (firstDay.getMonthValue() == endDay.getMonthValue()) {
-            //同一个月的情况
-            LinkedList<JSONObject> list = new LinkedList<>();
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("month", firstDay.getMonthValue());
-            jsonObject.put("startTime", startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            jsonObject.put("endTime", endDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            list.add(jsonObject);
-            return JSONObject.toJSONString(list);
-        } else {
-            LinkedList<JSONObject> list = new LinkedList<>();
-            int segment = startDate.getMonthValue() - endDate.getMonthValue();
-            if (segment < 0) {
-                //没跨年
-                for (int i = startDate.getMonthValue(); i <= endDate.getMonthValue(); i++) {
-                    JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("month", String.valueOf(startDate.getYear()) + String.valueOf(i));
-                    list.add(jsonObject);
-                }
-            } else {
-                //跨年
-                JSONObject jsonObject1 = new JSONObject();
-                jsonObject1.put("month", String.valueOf(startDate.getYear()) + String.valueOf(startDate.getMonthValue()));
-                list.add(jsonObject1);
-                JSONObject jsonObject2 = new JSONObject();
-                jsonObject2.put("month", String.valueOf(endDate.getYear()) + String.valueOf(endDate.getMonthValue()));
-                list.add(jsonObject2);
-                if (startDate.getMonthValue() + endDate.getMonthValue() == 14) {
-                    JSONObject jsonObject3 = new JSONObject();
-                    jsonObject3.put("month", String.valueOf(endDate.getYear()) + "01");
-                    list.add(1, jsonObject3);
-                } else if (startDate.getMonthValue() + endDate.getMonthValue() == 12) {
-                    JSONObject jsonObject4 = new JSONObject();
-                    jsonObject4.put("month", String.valueOf(startDate.getYear()) + "12");
-                    list.add(1, jsonObject4);
-                }
-            }
-
-            list.getFirst().put("startTime", startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            list.getFirst().put("endTime", startDate.with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            list.getLast().put("startTime", endDate.with(TemporalAdjusters.firstDayOfMonth()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            list.getLast().put("endTime", endDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-
-            if (list.size() == 3) {
-                String month = list.get(1).getString("month");
-                LocalDateTime modifiedDateTime = LocalDateTime.now().with(ChronoField.MONTH_OF_YEAR, Long.parseLong(month.substring(4, 6)));
-                list.get(1).put("startTime", modifiedDateTime.with(TemporalAdjusters.firstDayOfMonth()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-                list.get(1).put("endTime", modifiedDateTime.with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            }
-            return JSONObject.toJSONString(list);
-        }
-
+    public static String test(Integer days) {
+        /**
+         * Instant.ofEpochMilli(xxx)这里面就是把毫秒时间戳转换为localdatetime
+         * 他还有个好兄弟是
+         * Instant.ofEpochSecond是吧秒时间戳换换位我们需要的格式的
+         *
+         */
+        DateTimeFormatter ftf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String donetime = ftf.format(LocalDateTime.ofInstant(Instant.ofEpochMilli
+                (Long.parseLong("这里写已知的秒时间戳") * 1000L), ZoneId.systemDefault()));
+        return donetime;
     }
 }
 

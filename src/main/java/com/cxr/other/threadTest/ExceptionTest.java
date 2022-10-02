@@ -1,7 +1,5 @@
 package com.cxr.other.threadTest;
 
-import org.omg.CORBA.OBJ_ADAPTER;
-
 import java.util.concurrent.*;
 
 public class ExceptionTest implements ThreadFactory {
@@ -79,22 +77,44 @@ public class ExceptionTest implements ThreadFactory {
 
     public static void test05() throws ExecutionException, InterruptedException {
         ExecutorService executorService = Executors.newSingleThreadExecutor(new ExceptionTest());
+        Future<Integer> submit = null;
 
-        Future<Integer> submit = executorService.submit(() -> {
-            int i = 1 / 0;
-            return i;
-        });
+        try {
+            //这样也是拿不到的
+            submit = executorService.submit(() -> {
+                int i = 1 / 0;
+                return i;
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         //异常被吞了 不调用get方法不报异常
         try {
-            System.out.println(submit.get()+"---test05");
-        }catch (Exception e){
+            System.out.println(submit.get() + "---test05");
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("d");
         }
     }
 
+    /**
+     * 线程池exetute可以 主线程可以直接捕获
+     */
+    public static void test06() {
+        try {
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+            executorService.execute(() -> {
+                int i = 1 / 0;
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        test05();
+        test06();
     }
 }

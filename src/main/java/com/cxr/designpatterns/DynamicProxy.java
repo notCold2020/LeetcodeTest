@@ -89,6 +89,7 @@ public class DynamicProxy implements InvocationHandler {
         System.out.println("这里可以调用其他类的方法，表示增强");
         //点进去看一眼宝所在的目录 就知道是反射了
         Object invoke = method.invoke(new FruitImpl(), args);
+        System.out.println(this);
         System.out.println("这里同理+1");
         return method;
     }

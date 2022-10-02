@@ -6,7 +6,6 @@ import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.core.type.filter.AssignableTypeFilter;
 import org.springframework.core.type.filter.TypeFilter;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -28,7 +27,14 @@ import java.util.Set;
  */
 public class HelloImportSelector implements ImportSelector {
 
+    public HelloImportSelector() {
+        System.out.println("@Import#HelloImportSelector");
+    }
+
     @Override
+    /**
+     * selectImports接口的返回值会放进ioc容器中
+     */
     public String[] selectImports(AnnotationMetadata importingClassMetadata) {
         // 1. 定义扫描包的名称
         String[] basePackages = null;
@@ -56,7 +62,7 @@ public class HelloImportSelector implements ImportSelector {
         }
         //false：不使用默认的扫描规则 https://blog.csdn.net/weixin_39724194/article/details/103480547
         ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(false);
-        // 切记：是扫描basePackage下的符合我们过滤规则的包
+        // 切记：是扫描basePackage下的符合我们过滤规则的包 --> 在这把UserService放进去了
         TypeFilter helloServiceFilter2 = new AssignableTypeFilter(UserService.class);
         scanner.addIncludeFilter(helloServiceFilter2);
         Set<String> classes = new HashSet<>();

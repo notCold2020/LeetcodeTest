@@ -12,6 +12,8 @@ import java.util.stream.Stream;
 /**
  * @Author: CiXingrui
  * @Create: 2021/12/1 7:58 下午
+ *
+ * 并行流对于list来说是并行的，但不是异步的
  */
 @SpringBootTest
 public class parallelStream {
@@ -71,7 +73,7 @@ public class parallelStream {
                 e.printStackTrace();
             }
         });
-        System.out.println("并行流结束");//并不是异步的
+        System.out.println("并行流结束");//!!!!并不是异步的
 
         long end1 = System.currentTimeMillis();
 
@@ -79,10 +81,10 @@ public class parallelStream {
 
         IntStream.range(0, 6).forEach(m -> {
             try {
-                if (m == 0) {
-                    System.out.println("发生异常");
-                    int i = 1 / 0;
-                }
+//                if (m == 0) {
+//                    System.out.println("发生异常");//如果发生异常后续的并不会执行
+//                    int i = 1 / 0;
+//                }
                 Thread.sleep(1000L);
             } catch (InterruptedException e) {
                 e.printStackTrace();

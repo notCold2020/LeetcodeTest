@@ -1,9 +1,5 @@
 package com.cxr.designpatterns;
 
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-
 /**
  * 单例设计模式
  * 懒汉式
@@ -68,7 +64,7 @@ class LazySafeSingleObject {
 }
 
 
-//懒汉式 双检锁 线程安全
+//懒汉式 双检锁 线程安全 双重监察所
 class DoubleLockSingleObject {
     /**
      * volatile:禁用指令重排
@@ -86,7 +82,13 @@ class DoubleLockSingleObject {
         //第一次其实可以没有 它的作用是提高效率 避免多线程访问时每个线程都尝试获取锁
         if (null == object) {
             synchronized (DoubleLockSingleObject.class) {
-                //第二次是延迟加载 lazy的思想
+                /**
+                 * 第二次是延迟加载 lazy的思想
+                 * A B线程来，在第一个if判断都通过了
+                 * B线程抢到锁 A线程在等待
+                 * B线程实例化了公共的对象 return了
+                 * 这个时候A进来了 直接第二个if判断 避免重新实例化对象 更高效
+                 */
                 if (null == object) {
                     /**
                      * 不是原子操作 2,3可能发生指令重排

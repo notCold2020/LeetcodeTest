@@ -1,19 +1,19 @@
 package com.cxr.other.spring.aspect;
 
 
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import com.cxr.other.spring.InterfaceSelf.InterfaceMySelf;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.aspectj.lang.*;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import com.cxr.other.spring.InterfaceSelf.*;
 
 
 @Aspect
 @Component  //切面想要实现是肯定要交给spring来管理的，即@Compoment
+@Order(1) //这个@Order只有写在切面类上才能指定先后顺序
 public class AspectSelf {
 
 
@@ -29,10 +29,18 @@ public class AspectSelf {
     }
 
     @Before("beforePointcut()")
-    public void before(JoinPoint joinpoint) {
-        System.out.println("-----");
-        logger.info("我是前置通知");
-        logger.info(joinpoint.getSignature().toString());
+    public void before1(JoinPoint joinpoint) {
+        System.out.println("我是前置通知2");
+    }
+
+    @Before("beforePointcut()")
+    public void before2(JoinPoint joinpoint) {
+        System.out.println("我是前置通知3");
+    }
+
+    @After("beforePointcut()")
+    public void after(JoinPoint joinpoint) {
+        System.out.println("我是后置通知");
     }
 
     /**
@@ -43,7 +51,9 @@ public class AspectSelf {
      */
     @Around("beforePointcut()")
     public String around(ProceedingJoinPoint joinpoint) throws Throwable {
+        System.out.println("环绕通知之前");
         Object proceed = joinpoint.proceed();
+        System.out.println("环绕通知之后");
         return "555";
     }
 

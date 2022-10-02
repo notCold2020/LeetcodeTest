@@ -1,6 +1,5 @@
 package com.cxr.other.juc;
 
-import com.cxr.other.demo.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

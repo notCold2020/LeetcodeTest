@@ -17,5 +17,10 @@ public class FactoryBeanDemoTest {
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(DaoFactoryBean.class);
         DaoFactoryBean daoFactoryBean = (DaoFactoryBean) applicationContext.getBean("&daoFactoryBean");//拿到的是ioc容器中的对象
         TempFactoryBean tempFactoryBean = (TempFactoryBean) applicationContext.getBean("daoFactoryBean");//是getObject返回值 `
+        //这次就不会进入getObject方法了，盲猜上一次getObject方法已经把bean放进哪存起来了了，这次直接去缓存中获取就好了
+        TempFactoryBean tempFactoryBean2 = (TempFactoryBean) applicationContext.getBean("&daoFactoryBean");//是getObject返回值 `
+        //ioc容器的bean
+        DaoFactoryBean tempFactoryBean3 = (DaoFactoryBean) applicationContext.getBean("&daoFactoryBean");//是getObject返回值 `
+
     }
 }

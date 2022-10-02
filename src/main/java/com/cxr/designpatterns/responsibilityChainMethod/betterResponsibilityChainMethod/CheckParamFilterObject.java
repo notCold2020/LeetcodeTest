@@ -1,10 +1,9 @@
 package com.cxr.designpatterns.responsibilityChainMethod.betterResponsibilityChainMethod;
 
-import org.omg.CORBA.Request;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import javax.xml.ws.Response;
+import java.util.List;
 
 /**
  * 参数校验对象
@@ -14,7 +13,10 @@ import javax.xml.ws.Response;
 public class CheckParamFilterObject extends AbstractHandler {
 
     @Override
-    public void doFilter(Request request, Response response) {
+    public void doFilter(List<String> request, List<String> response) {
         System.out.println("非空参数检查");
+        response.add("非空参数检查");
+
+
     }
 }

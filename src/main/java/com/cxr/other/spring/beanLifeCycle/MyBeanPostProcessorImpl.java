@@ -8,7 +8,16 @@ import org.springframework.stereotype.Component;
 public class MyBeanPostProcessorImpl implements BeanPostProcessor {
 
     @Override
+    /**
+     * 任何一个类在初始化前后都会执行下面的两个before after方法
+     * 像我们这样直接实现BeanPostProcessor，会导致
+     *         System.out.println("MyBeanPostProcessorImpl|postProcessBeforeInitialization:" + beanName);
+     * 每个类都会打印一次
+     *
+     * 所以要单独判断 instance of
+     */
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+        System.out.println("MyBeanPostProcessorImpl|postProcessBeforeInitialization:" + beanName);
         if (beanName.equals("dd")) {
             return bean;
         }

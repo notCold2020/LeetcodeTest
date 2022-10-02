@@ -84,7 +84,7 @@ public class UserController implements ApplicationContextAware {
     private String aspectTest() {
         System.out.println("--");
 //        return aspectTest.beforeTest();
-        return String.valueOf(i++);
+        return "";
     }
 
 

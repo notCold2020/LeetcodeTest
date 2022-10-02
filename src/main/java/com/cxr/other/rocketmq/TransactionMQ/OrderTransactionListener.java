@@ -14,8 +14,16 @@ public class OrderTransactionListener implements TransactionListener {
 
 
     /**
-     * //发送事务消息
+     * //发送事务消息  A系统 -- MQ -- B系统
      * TransactionSendResult result = producer.sendMessageInTransaction(message, orderId);
+     * 1.Product先发送个半消息给MQ，MQ收到之后回调下面的executeLocalTransaction，来执行Product的本地事务，根据executeLocalTransaction的返回值
+     *   来判断是回滚还是提交这个半消息
+     *      --提交：则说明A阶段消息落到MQ成功
+     *      --回滚：说明A阶段本地事务失败了，就要把半消息删除掉
+     *      --UNKNOW：这个状态其实是一个不确定的状态，RocketMQ在收到这个状态后，会定时多次进行反查，直到得到成功、失败的状态或者事务超时才结束。
+     * 2.消息如果长时间在MQ那边处于半消息的状态，那么就会回调checkLocalTransaction判断这条消息的去/留
+     *   这里可以在本地查询下数据库看看是不是下单成功
+     *
      *
      * @param msg
      * @param arg  这个arg就是传进来的orderId
@@ -32,7 +40,7 @@ public class OrderTransactionListener implements TransactionListener {
     }
 
     /**
-     * LocalTransactionState.UNKNOW：未知，
+     * LocalTransactionState.UNKNOW：未知，RocketMQ在收到这个状态后，会定时多次进行反查，直到得到成功、失败的状态或者事务超时才结束。
      * 如果返回这个状态，这个消息既不提交，也不回滚，还是保持prepared状态，而最终决定这个消息命运的
      * 是checkLocalTransaction这个方法。
      */

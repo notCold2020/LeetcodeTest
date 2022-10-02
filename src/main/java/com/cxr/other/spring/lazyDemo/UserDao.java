@@ -1,9 +1,7 @@
 package com.cxr.other.spring.lazyDemo;
 
-import org.springframework.context.annotation.ComponentScan;
-
-@ComponentScan
-//@Repository
+//@ComponentScan
+//@Service
 //@Lazy
 public class UserDao {
 

@@ -22,8 +22,8 @@ spring:
     proxy-target-class: false
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://175.24.87.213:3306/test?useUnicode=true&characterEncoding-utr-8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&allowMultiQueries=true
-    username: root1
+    url: jdbc:mysql://localhost:3306/练习库表?useUnicode=true&characterEncoding-utr-8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&allowMultiQueries=true
+    username: root
     password: myq888.ten
 mybatis:
 #  将该路径下的xml文件加载到mybatis中，把接口对应到xml文件上
@@ -44,6 +44,13 @@ logging:
 #    path: D:\NetEase
 #    name: majia.log
 server:
-  port: 8081
+  port: 8085
 
 testValue: test
+
+loginFilter: true
+
+conf:
+  fig:
+    user_name: testName
+    account: testAccount

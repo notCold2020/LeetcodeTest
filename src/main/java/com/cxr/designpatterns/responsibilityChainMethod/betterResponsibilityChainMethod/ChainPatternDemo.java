@@ -1,11 +1,9 @@
 package com.cxr.designpatterns.responsibilityChainMethod.betterResponsibilityChainMethod;
 
-import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.xml.ws.Response;
 import java.util.List;
 
 @Component("ChainPatternDemo")
@@ -26,6 +24,9 @@ public class ChainPatternDemo {
 
         for (int i = 0; i < abstractHandleList.size(); i++) {
             if (i == 0) {
+                /**
+                 * 这不是在初始化的时候 abstractHandler = new xxxx() 了吗
+                 */
                 abstractHandler = abstractHandleList.get(0);
             } else {
                 AbstractHandler currentHander = abstractHandleList.get(i - 1);
@@ -36,7 +37,11 @@ public class ChainPatternDemo {
     }
 
     //直接调用这个方法使用
-    public Response exec(Request request, Response response) {
+    public List<String> exec(List<String> request, List<String> response) {
+        /**
+         * 这里在第一次调用，下面的abstractHandler已经是被初始化过的了
+         * 因为这个是普通方法，所以会走到抽象类的filter方法
+         */
         abstractHandler.filter(request, response);
         return response;
     }
